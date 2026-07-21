@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEGATTRA | High Fashion & Luxury</title>
+    <title>NEGATTRA | High Fashion & Atelier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
             --bg-card: #121212;
             --text-main: #f5f5f5;
             --text-muted: #a0a0a0;
-            --accent: #d4af37; /* Subtle metallic gold tint */
+            --accent: #d4af37;
             --border-color: rgba(255, 255, 255, 0.1);
             --font-heading: 'Cinzel', serif;
             --font-body: 'Montserrat', sans-serif;
@@ -51,10 +51,24 @@
             display: block;
         }
 
+        /* --- ANNOUNCEMENT BAR --- */
+        .announcement-bar {
+            background-color: var(--accent);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            padding: 0.4rem 1rem;
+            position: relative;
+            z-index: 1001;
+        }
+
         /* --- NAVIGATION --- */
         header {
             position: fixed;
-            top: 0;
+            top: 27px;
             left: 0;
             width: 100%;
             z-index: 1000;
@@ -67,25 +81,29 @@
         }
 
         header.scrolled {
+            top: 0;
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 4rem;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .brand-logo img {
-            height: 50px;
-            filter: invert(1) brightness(1.2); /* Inverts dark logo to white/light metallic for black background */
-            transition: var(--transition);
+        .brand-logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
-        .nav-links a {
+        .nav-links a, .custom-text-btn {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -93,28 +111,108 @@
             position: relative;
             opacity: 0.8;
             transition: var(--transition);
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover, .custom-text-btn:hover {
             opacity: 1;
             color: var(--accent);
         }
 
-        .nav-links a::after {
-            content: '';
+        /* Mobile Nav Close Button */
+        .close-nav-btn {
+            display: none;
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--accent);
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Custom Monogram Dropdown */
+        .custom-text-wrapper {
+            position: relative;
+        }
+
+        .custom-text-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            width: 280px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 101;
+        }
+
+        .custom-text-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .custom-text-dropdown h5 {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .custom-text-dropdown p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .custom-text-input {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            outline: none;
+        }
+
+        .custom-text-input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-apply-text {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: var(--text-main);
+            color: #000;
+            border: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .btn-apply-text:hover {
+            background-color: var(--accent);
         }
 
+        /* NAV ACTIONS */
         .nav-actions {
             display: flex;
             align-items: center;
@@ -125,13 +223,30 @@
             background: none;
             border: none;
             color: var(--text-main);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
 
         .icon-btn:hover {
             color: var(--accent);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: var(--accent);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hamburger {
@@ -139,6 +254,8 @@
             cursor: pointer;
             flex-direction: column;
             gap: 5px;
+            background: none;
+            border: none;
         }
 
         .hamburger span {
@@ -156,7 +273,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(10, 10, 10, 1)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(10, 10, 10, 1)), 
                         url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             text-align: center;
             padding: 0 1rem;
@@ -164,7 +281,6 @@
 
         .hero-content {
             max-width: 800px;
-            animation: fadeIn 1.5s ease-out;
         }
 
         .hero-title {
@@ -172,12 +288,25 @@
             font-size: 4rem;
             letter-spacing: 6px;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-weight: 400;
         }
 
+        .custom-preview-display {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            min-height: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            display: inline-block;
+            padding: 0 1rem;
+        }
+
         .hero-subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 3px;
             color: var(--text-muted);
             text-transform: uppercase;
@@ -192,8 +321,6 @@
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
             transition: var(--transition);
             background: transparent;
             cursor: pointer;
@@ -253,6 +380,7 @@
             position: relative;
             overflow: hidden;
             aspect-ratio: 3/4;
+            display: block;
         }
 
         .product-image img {
@@ -264,6 +392,32 @@
 
         .product-card:hover .product-image img {
             transform: scale(1.05);
+        }
+
+        .quick-add-btn {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgba(10, 10, 10, 0.9);
+            color: var(--text-main);
+            border: none;
+            border-top: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .quick-add-btn {
+            bottom: 0;
+        }
+
+        .quick-add-btn:hover {
+            background-color: var(--accent);
+            color: #000;
         }
 
         .product-info {
@@ -292,34 +446,77 @@
             font-weight: 500;
         }
 
-        /* --- BRAND BANNER --- */
-        .brand-banner {
-            height: 60vh;
-            background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)), 
-                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1920&auto=format&fit=crop') fixed center/cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        /* --- SHOPPING CART DRAWER --- */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background-color: var(--bg-card);
+            z-index: 2000;
+            border-left: 1px solid var(--border-color);
+            transition: var(--transition);
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .banner-content {
-            max-width: 700px;
+        .cart-drawer.open {
+            right: 0;
         }
 
-        .banner-content h2 {
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .cart-header h3 {
             font-family: var(--font-heading);
-            font-size: 2.5rem;
-            letter-spacing: 4px;
-            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
         }
 
-        .banner-content p {
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            padding: 1.5rem 0;
+            overflow-y: auto;
+        }
+
+        .cart-empty-text {
             color: var(--text-muted);
-            font-weight: 300;
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.85rem;
+        }
+
+        .cart-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
         }
 
         /* --- FOOTER --- */
@@ -336,10 +533,10 @@
             margin-bottom: 4rem;
         }
 
-        .footer-brand img {
-            height: 35px;
-            filter: invert(1);
-            margin-bottom: 1.5rem;
+        .footer-brand h3 {
+            font-family: var(--font-heading);
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
         }
 
         .footer-brand p {
@@ -386,95 +583,90 @@
             color: var(--text-muted);
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 1024px) {
-            header, footer {
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
-            .section {
-                padding: 6rem 2rem;
-            }
-            .hero-title {
-                font-size: 3rem;
-            }
-        }
-
+        /* RESPONSIVE DESIGN */
         @media (max-width: 768px) {
+            header { padding: 1rem 2rem; }
+            .cart-drawer { width: 100%; }
+            .hero-title { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; }
+
             .hamburger {
                 display: flex;
+            }
+
+            .close-nav-btn {
+                display: block;
             }
 
             .nav-links {
                 position: fixed;
                 top: 0;
                 right: -100%;
-                width: 70%;
+                width: 75%;
                 height: 100vh;
                 background-color: var(--bg-card);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 transition: var(--transition);
-                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.8);
+                z-index: 1050;
             }
 
             .nav-links.active {
                 right: 0;
-            }
-
-            .hero-title {
-                font-size: 2.2rem;
-                letter-spacing: 4px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
+    <div class="announcement-bar">
+        Complimentary Express Worldwide Shipping on Orders Over $500
+    </div>
+
     <header id="navbar">
-        <a href="#" class="brand-logo">
-            <img src="Logo1.png" alt="NEGATTRA Logo">
-        </a>
+        <a href="#" class="brand-logo">NEGATTRA</a>
         
         <ul class="nav-links" id="navLinks">
+            <button class="close-nav-btn" id="closeNavBtn" aria-label="Close Menu">&times;</button>
+
             <li><a href="#home">Home</a></li>
             <li><a href="#collection">Collections</a></li>
+            
+            <li class="custom-text-wrapper" id="customTextWrapper">
+                <button class="custom-text-btn" id="customTextBtn">Atelier Text ✨</button>
+                <div class="custom-text-dropdown" id="customTextDropdown">
+                    <h5>Custom Monogram</h5>
+                    <p>Add your personalized initials or tagline to preview on hero items.</p>
+                    <input type="text" id="customInput" class="custom-text-input" placeholder="e.g., N.G. 2026" maxlength="15">
+                    <button class="btn-apply-text" onclick="applyCustomText()">Apply Monogram</button>
+                </div>
+            </li>
+
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
         <div class="nav-actions">
-            <button class="icon-btn" aria-label="Search">&#128065;</button>
-            <button class="icon-btn" aria-label="Cart">&#128092;</button>
-            <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <button class="icon-btn" aria-label="Search" onclick="alert('Search functionality activated.')">🔍</button>
+            <button class="icon-btn" aria-label="Cart" id="cartBtn">
+                🛍️
+                <span class="cart-badge" id="cartCount">0</span>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </header>
 
     <section class="hero" id="home">
         <div class="hero-content">
             <h1 class="hero-title">NEGATTRA</h1>
+            <div class="custom-preview-display" id="monogramDisplay">[ Bespoke Couture ]</div>
             <p class="hero-subtitle">Elegance Redefined • Autumn/Winter '26</p>
             <a href="#collection" class="btn-primary">Explore Collection</a>
         </div>
@@ -488,9 +680,10 @@
 
         <div class="product-grid">
             <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" alt="High Fashion Coat">
-                </div>
+                <a href="#product-monochrome-trench" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" alt="Monochrome Trench">
+                </a>
+                <button class="quick-add-btn" onclick="addToCart()">Quick Add +</button>
                 <div class="product-info">
                     <div class="product-category">Outerwear</div>
                     <h3 class="product-title">Monochrome Trench</h3>
@@ -499,9 +692,10 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Luxury Evening Dress">
-                </div>
+                <a href="#product-obsidian-gown" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Obsidian Gown">
+                </a>
+                <button class="quick-add-btn" onclick="addToCart()">Quick Add +</button>
                 <div class="product-info">
                     <div class="product-category">Evening Wear</div>
                     <h3 class="product-title">Obsidian Gown</h3>
@@ -510,9 +704,10 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Avant Garde Suit">
-                </div>
+                <a href="#product-sculpted-blazer" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Sculpted Blazer">
+                </a>
+                <button class="quick-add-btn" onclick="addToCart()">Quick Add +</button>
                 <div class="product-info">
                     <div class="product-category">Tailored</div>
                     <h3 class="product-title">Sculpted Blazer</h3>
@@ -521,9 +716,10 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop" alt="Designer Accessories">
-                </div>
+                <a href="#product-structured-tote" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop" alt="Structured Tote">
+                </a>
+                <button class="quick-add-btn" onclick="addToCart()">Quick Add +</button>
                 <div class="product-info">
                     <div class="product-category">Accessories</div>
                     <h3 class="product-title">Structured Tote</h3>
@@ -533,18 +729,23 @@
         </div>
     </section>
 
-    <section class="brand-banner" id="about">
-        <div class="banner-content">
-            <h2>The Vision</h2>
-            <p>NEGATTRA embodies the harmony of sharp geometries and timeless luxury. Designed for individuals who dictate trends rather than follow them.</p>
-            <a href="#contact" class="btn-primary">Discover the Atelier</a>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Shopping Bag</h3>
+            <button class="close-cart" id="closeCartBtn">&times;</button>
         </div>
-    </section>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty-text">Your bag is currently empty.</p>
+        </div>
+        <div class="cart-footer">
+            <button class="btn-checkout" onclick="alert('Proceeding to Secure Checkout...')">Checkout</button>
+        </div>
+    </aside>
 
     <footer id="contact">
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="logo.png" alt="NEGATTRA Logo">
+                <h3>NEGATTRA</h3>
                 <p>Defining modern luxury through bold architecture, refined textures, and uncompromised craftsmanship.</p>
             </div>
             <div class="footer-column">
@@ -553,14 +754,12 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#collection">Collections</a></li>
                     <li><a href="#about">Story</a></li>
-                    <li><a href="#">Stores</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>Client Care</h4>
                 <ul>
                     <li><a href="#">Contact Support</a></li>
-                    <li><a href="#">Book Appointment</a></li>
                     <li><a href="#">Shipping & Returns</a></li>
                     <li><a href="#">Care Guide</a></li>
                 </ul>
@@ -571,7 +770,6 @@
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">Pinterest</a></li>
                     <li><a href="#">Vogue Runway</a></li>
-                    <li><a href="#">LinkedIn</a></li>
                 </ul>
             </div>
         </div>
@@ -582,8 +780,19 @@
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // DOM Elements
         const navbar = document.getElementById('navbar');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const closeNavBtn = document.getElementById('closeNavBtn');
+        const cartBtn = document.getElementById('cartBtn');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const customTextBtn = document.getElementById('customTextBtn');
+        const customTextDropdown = document.getElementById('customTextDropdown');
+        const customTextWrapper = document.getElementById('customTextWrapper');
+
+        // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
@@ -592,20 +801,95 @@
             }
         });
 
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+        // Mobile Nav Toggle & Close
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.add('active');
         });
 
-        // Close mobile menu on link click
+        closeNavBtn.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+
+        // Close Mobile Menu on Nav Item Click
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
+
+        // Custom Text Dropdown Toggle
+        customTextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            customTextDropdown.classList.toggle('active');
+        });
+
+        // Cart Drawer Open/Close
+        cartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            cartDrawer.classList.add('open');
+        });
+
+        closeCartBtn.addEventListener('click', () => {
+            cartDrawer.classList.remove('open');
+        });
+
+        // --- CLICK / TOUCH OUTSIDE AUTOMATIC CLOSE FEATURE ---
+        document.addEventListener('click', (event) => {
+            // Close Mobile Nav if clicked outside
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(event.target) && 
+                !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+
+            // Close Cart Drawer if clicked outside
+            if (cartDrawer.classList.contains('open') && 
+                !cartDrawer.contains(event.target) && 
+                !cartBtn.contains(event.target)) {
+                cartDrawer.classList.remove('open');
+            }
+
+            // Close Custom Text Dropdown if clicked outside
+            if (customTextDropdown.classList.contains('active') && 
+                !customTextWrapper.contains(event.target)) {
+                customTextDropdown.classList.remove('active');
+            }
+        });
+
+        // Custom Monogram Function
+        function applyCustomText() {
+            const inputVal = document.getElementById('customInput').value;
+            const display = document.getElementById('monogramDisplay');
+            
+            if (inputVal.trim() !== '') {
+                display.textContent = `[ ${inputVal.trim()} ]`;
+            } else {
+                display.textContent = '[ Bespoke Couture ]';
+            }
+            customTextDropdown.classList.remove('active');
+        }
+
+        // Cart Item Logic
+        let itemCount = 0;
+        function addToCart() {
+            itemCount++;
+            document.getElementById('cartCount').textContent = itemCount;
+            
+            const cartItems = document.getElementById('cartItems');
+            if (itemCount === 1) {
+                cartItems.innerHTML = '';
+            }
+            
+            const itemElement = document.createElement('div');
+            itemElement.style.padding = '0.5rem 0';
+            itemElement.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+            itemElement.style.fontSize = '0.85rem';
+            itemElement.innerHTML = `<strong>NEGATTRA Atelier Piece</strong> - Added to Bag`;
+            cartItems.appendChild(itemElement);
+
+            cartDrawer.classList.add('open');
+        }
     </script>
 </body>
-</html>
+        </html>
