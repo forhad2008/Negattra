@@ -19,7 +19,7 @@
         :root {
             /* Vibrant & High-Contrast Colors (+30% color intensity) */
             --bg-dark: #000000;
-            --bg-card: #161618;
+            --bg-card: rgba(22, 22, 24, 0.85);
             --text-main: #ffffff;
             --text-muted: #c0c0c0;
             --accent: #ffd700; /* Vibrant metallic gold */
@@ -40,6 +40,18 @@
             font-family: var(--font-body);
             overflow-x: hidden;
             line-height: 1.6;
+            position: relative;
+        }
+
+        /* Animated Dark Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
 
         a {
@@ -137,6 +149,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .icon-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .icon-btn:hover {
@@ -414,6 +436,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(8px);
         }
 
         .product-card:hover {
@@ -524,7 +547,7 @@
 
         /* --- FOOTER --- */
         footer {
-            background-color: #050505;
+            background-color: rgba(5, 5, 5, 0.95);
             padding: 5rem 4rem 2rem 4rem;
             border-top: 1px solid var(--border-color);
         }
@@ -625,7 +648,8 @@
                 right: -100%;
                 width: 75%;
                 height: 100vh;
-                background-color: #0a0a0b;
+                background-color: rgba(10, 10, 11, 0.98);
+                backdrop-filter: blur(15px);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -663,6 +687,8 @@
 </head>
 <body>
 
+    <canvas id="bg-canvas"></canvas>
+
     <header id="navbar">
         <a href="#" class="brand-logo">
             <img src="logo1.png" alt="NEGATTRA Logo">
@@ -676,7 +702,12 @@
         </ul>
 
         <div class="nav-actions">
-            <button class="icon-btn" aria-label="Search" title="Search">&#128065;</button>
+            <button class="icon-btn" aria-label="Search" title="Search">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
             <button class="icon-btn" id="openCart" aria-label="Cart" title="Bag">
                 &#128092;
                 <span class="cart-badge" id="cartBadge">0</span>
@@ -771,6 +802,59 @@
     </footer>
 
     <script>
+        // --- BACKGROUND ANIMATION CONTROLLER ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, step = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawBackgroundAnimation() {
+            step += 0.003;
+            ctx.clearRect(0, 0, width, height);
+
+            // Shifting dark luxury background gradient
+            const x1 = width * (0.5 + 0.3 * Math.cos(step));
+            const y1 = height * (0.5 + 0.3 * Math.sin(step));
+            const x2 = width * (0.5 - 0.3 * Math.cos(step));
+            const y2 = height * (0.5 - 0.3 * Math.sin(step));
+
+            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+            grad.addColorStop(0, '#000000');
+            grad.addColorStop(0.5, '#0d0d12');
+            grad.addColorStop(1, '#181508');
+
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            // Subtle animated gold wave overlay
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.5);
+            for (let x = 0; x <= width; x += 20) {
+                const y = Math.sin(x * 0.002 + step) * 60 + Math.cos(x * 0.001 + step) * 30 + height * 0.5;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+
+            const waveGrad = ctx.createLinearGradient(0, height * 0.3, width, height);
+            waveGrad.addColorStop(0, 'rgba(255, 215, 0, 0.03)');
+            waveGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = waveGrad;
+            ctx.fill();
+            ctx.restore();
+
+            requestAnimationFrame(drawBackgroundAnimation);
+        }
+        drawBackgroundAnimation();
+
         // --- PRODUCT DATA STORE ---
         const products = [
             {
@@ -838,11 +922,12 @@
             }
         });
 
-        // --- MOBILE MENU TOGGLE ---
+        // --- MOBILE MENU TOGGLE & OUTSIDE TOUCH TO CLOSE ---
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', () => {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
         });
 
@@ -850,6 +935,15 @@
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
+        });
+
+        // Close mobile nav menu when touching/clicking anywhere outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
         });
 
         // --- SHOPPING BAG CONTROLLER ---
