@@ -151,16 +151,6 @@
             justify-content: center;
         }
 
-        .icon-btn svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
         .icon-btn:hover {
             color: var(--accent);
             transform: scale(1.1);
@@ -182,7 +172,7 @@
             justify-content: center;
         }
 
-        /* --- HAMBURGER MENU ADJUSTED TO LOGO SIZE --- */
+        /* --- HAMBURGER MENU --- */
         .hamburger {
             display: none;
             cursor: pointer;
@@ -333,7 +323,81 @@
             pointer-events: auto;
         }
 
-        /* --- HERO SECTION --- */
+        /* --- REAL CHECKOUT MODAL WINDOW --- */
+        .checkout-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 500px;
+            background: #111113;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            z-index: 1300;
+            padding: 2.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+
+        .checkout-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .checkout-header h3 {
+            font-family: var(--font-heading);
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background: #1a1a1c;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            border-radius: 2px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* --- HERO SECTION WITH VISIBLE ANIMATED BACKGROUND IMAGE --- */
         .hero {
             height: 100vh;
             width: 100%;
@@ -341,13 +405,43 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.95)), 
-                        url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             text-align: center;
             padding: 0 1rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.95)), 
+                        url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            z-index: 0;
+            animation: heroBgPulse 12s ease-in-out infinite alternate;
+        }
+
+        /* Hero Visible Background Animation Keyframes */
+        @keyframes heroBgPulse {
+            0% {
+                transform: scale(1);
+                filter: brightness(1) contrast(1);
+            }
+            50% {
+                transform: scale(1.08);
+                filter: brightness(1.15) contrast(1.1);
+            }
+            100% {
+                transform: scale(1.03);
+                filter: brightness(0.9) contrast(1.05);
+            }
         }
 
         .hero-content {
+            position: relative;
+            z-index: 1;
             max-width: 800px;
             animation: fadeIn 1.5s ease-out;
         }
@@ -449,6 +543,7 @@
             position: relative;
             overflow: hidden;
             aspect-ratio: 3/4;
+            display: block;
         }
 
         .product-image img {
@@ -484,6 +579,12 @@
             font-size: 1.15rem;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .product-title:hover {
+            color: var(--accent);
         }
 
         .product-price {
@@ -702,12 +803,6 @@
         </ul>
 
         <div class="nav-actions">
-            <button class="icon-btn" aria-label="Search" title="Search">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
             <button class="icon-btn" id="openCart" aria-label="Cart" title="Bag">
                 &#128092;
                 <span class="cart-badge" id="cartBadge">0</span>
@@ -732,9 +827,45 @@
                 <span>Subtotal</span>
                 <span id="cartTotal">$0</span>
             </div>
-            <button class="btn-primary" onclick="alert('Proceeding to Checkout...')">Checkout</button>
+            <button class="btn-primary" id="openCheckout">Checkout</button>
         </div>
     </aside>
+
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-header">
+            <h3>CHECKOUT</h3>
+            <button class="close-cart" id="closeCheckout">&times;</button>
+        </div>
+        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required placeholder="e.g. Eleanor Vance">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required placeholder="eleanor@atelier.com">
+            </div>
+            <div class="form-group">
+                <label>Shipping Address</label>
+                <input type="text" required placeholder="123 Luxury Ave, Suite 400">
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex:2;">
+                    <label>Card Number</label>
+                    <input type="text" required placeholder="•••• •••• •••• ••••">
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Expiry</label>
+                    <input type="text" required placeholder="MM/YY">
+                </div>
+            </div>
+            <div class="cart-total" style="margin-top: 1rem;">
+                <span>Total Amount</span>
+                <span id="checkoutTotal">$0</span>
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top: 1rem;">Complete Purchase</button>
+        </form>
+    </div>
 
     <section class="hero" id="home">
         <div class="hero-content">
@@ -818,7 +949,6 @@
             step += 0.003;
             ctx.clearRect(0, 0, width, height);
 
-            // Shifting dark luxury background gradient
             const x1 = width * (0.5 + 0.3 * Math.cos(step));
             const y1 = height * (0.5 + 0.3 * Math.sin(step));
             const x2 = width * (0.5 - 0.3 * Math.cos(step));
@@ -832,7 +962,6 @@
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, width, height);
 
-            // Subtle animated gold wave overlay
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(0, height * 0.5);
@@ -855,35 +984,39 @@
         }
         drawBackgroundAnimation();
 
-        // --- PRODUCT DATA STORE ---
+        // --- PRODUCT DATA STORE (WITH LINKED HTML FILES) ---
         const products = [
             {
                 id: "1",
                 category: "Outerwear",
                 name: "Monochrome Trench",
                 price: 1250,
-                image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop"
+                image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop",
+                link: "product1.html"
             },
             {
                 id: "2",
                 category: "Evening Wear",
                 name: "Obsidian Gown",
                 price: 2100,
-                image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop"
+                image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop",
+                link: "product2.html"
             },
             {
                 id: "3",
                 category: "Tailored",
                 name: "Sculpted Blazer",
                 price: 980,
-                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop"
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop",
+                link: "product3.html"
             },
             {
                 id: "4",
                 category: "Accessories",
                 name: "Structured Tote",
                 price: 650,
-                image: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop"
+                image: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop",
+                link: "product4.html"
             }
         ];
 
@@ -896,13 +1029,13 @@
                 const card = document.createElement('div');
                 card.classList.add('product-card');
                 card.innerHTML = `
-                    <div class="product-image">
+                    <a href="${product.link}" class="product-image">
                         <img src="${product.image}" alt="${product.name}">
-                    </div>
+                    </a>
                     <div class="product-info">
                         <div>
                             <div class="product-category">${product.category}</div>
-                            <h3 class="product-title">${product.name}</h3>
+                            <a href="${product.link}" class="product-title">${product.name}</a>
                             <div class="product-price">$${product.price.toLocaleString()}</div>
                         </div>
                         <button class="btn-add-cart" onclick="addToBag('${product.id}')">Add to Bag</button>
@@ -937,7 +1070,6 @@
             });
         });
 
-        // Close mobile nav menu when touching/clicking anywhere outside
         document.addEventListener('click', (e) => {
             if (navLinks.classList.contains('active') && 
                 !navLinks.contains(e.target) && 
@@ -946,7 +1078,7 @@
             }
         });
 
-        // --- SHOPPING BAG CONTROLLER ---
+        // --- SHOPPING BAG & CHECKOUT CONTROLLER ---
         let cart = [];
         const cartDrawer = document.getElementById('cartDrawer');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -956,6 +1088,11 @@
         const cartBadge = document.getElementById('cartBadge');
         const cartTotal = document.getElementById('cartTotal');
 
+        const checkoutModal = document.getElementById('checkoutModal');
+        const openCheckoutBtn = document.getElementById('openCheckout');
+        const closeCheckoutBtn = document.getElementById('closeCheckout');
+        const checkoutTotal = document.getElementById('checkoutTotal');
+
         function toggleCart() {
             cartDrawer.classList.toggle('open');
             cartOverlay.classList.toggle('active');
@@ -963,7 +1100,26 @@
 
         openCartBtn.addEventListener('click', toggleCart);
         closeCartBtn.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', toggleCart);
+        
+        cartOverlay.addEventListener('click', () => {
+            cartDrawer.classList.remove('open');
+            checkoutModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+
+        openCheckoutBtn.addEventListener('click', () => {
+            if(cart.length === 0) {
+                alert('Your bag is currently empty.');
+                return;
+            }
+            cartDrawer.classList.remove('open');
+            checkoutModal.classList.add('active');
+        });
+
+        closeCheckoutBtn.addEventListener('click', () => {
+            checkoutModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
 
         window.addToBag = function(productId) {
             const product = products.find(p => p.id === productId);
@@ -1009,12 +1165,22 @@
 
             cartBadge.textContent = totalCount;
             cartTotal.textContent = `$${total.toLocaleString()}`;
+            checkoutTotal.textContent = `$${total.toLocaleString()}`;
         }
 
         window.removeFromCart = function(id) {
             cart = cart.filter(item => item.id !== id);
             updateCartUI();
         };
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            alert('Thank you for your order! Your purchase with NEGATTRA was successful.');
+            cart = [];
+            updateCartUI();
+            checkoutModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        }
 
         // Initialize Product Section on load
         renderProducts();
