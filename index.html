@@ -376,7 +376,7 @@
             color: var(--text-muted);
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.8rem;
             background: #1a1a1c;
@@ -387,7 +387,7 @@
             border-radius: 2px;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
         }
@@ -646,6 +646,17 @@
             font-size: 1rem;
         }
 
+        /* --- CONTACT MESSAGE SECTION --- */
+        .contact-section {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3.5rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
         /* --- FOOTER --- */
         footer {
             background-color: rgba(5, 5, 5, 0.95);
@@ -892,7 +903,35 @@
         </div>
     </section>
 
-    <footer id="contact">
+    <section class="section" id="contact">
+        <div class="section-header">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Direct Inquiry to Our Atelier</p>
+        </div>
+        <div class="contact-section">
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required placeholder="e.g. Eleanor Vance">
+                </div>
+                <div class="form-group">
+                    <label>Your Email Address</label>
+                    <input type="email" name="email" required placeholder="eleanor@atelier.com">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" name="subject" required placeholder="Custom Design / General Inquiry">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="5" required placeholder="Write your message here..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer id="contact-footer">
         <div class="footer-grid">
             <div class="footer-brand">
                 <img src="logo.png" alt="NEGATTRA Logo">
@@ -910,7 +949,7 @@
             <div class="footer-column">
                 <h4>Client Care</h4>
                 <ul>
-                    <li><a href="#">Contact Support</a></li>
+                    <li><a href="#contact">Contact Support</a></li>
                     <li><a href="#">Book Appointment</a></li>
                     <li><a href="#">Shipping & Returns</a></li>
                     <li><a href="#">Care Guide</a></li>
@@ -1044,6 +1083,7 @@
                 grid.appendChild(card);
             });
         }
+        renderProducts();
 
         // --- NAVBAR SCROLL EFFECT ---
         const navbar = document.getElementById('navbar');
@@ -1059,39 +1099,32 @@
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
+        hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
+        // Close menu when clicking outside or on a link
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
 
-        document.addEventListener('click', (e) => {
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(e.target) && 
-                !hamburger.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // --- SHOPPING BAG & CHECKOUT CONTROLLER ---
+        // --- CART DRAWER LOGIC ---
         let cart = [];
         const cartDrawer = document.getElementById('cartDrawer');
         const cartOverlay = document.getElementById('cartOverlay');
         const openCartBtn = document.getElementById('openCart');
         const closeCartBtn = document.getElementById('closeCart');
-        const cartItemsContainer = document.getElementById('cartItems');
         const cartBadge = document.getElementById('cartBadge');
-        const cartTotal = document.getElementById('cartTotal');
-
-        const checkoutModal = document.getElementById('checkoutModal');
-        const openCheckoutBtn = document.getElementById('openCheckout');
-        const closeCheckoutBtn = document.getElementById('closeCheckout');
-        const checkoutTotal = document.getElementById('checkoutTotal');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
 
         function toggleCart() {
             cartDrawer.classList.toggle('open');
@@ -1100,16 +1133,59 @@
 
         openCartBtn.addEventListener('click', toggleCart);
         closeCartBtn.addEventListener('click', toggleCart);
-        
         cartOverlay.addEventListener('click', () => {
             cartDrawer.classList.remove('open');
-            checkoutModal.classList.remove('active');
             cartOverlay.classList.remove('active');
+            checkoutModal.classList.remove('active');
         });
 
+        function addToBag(id) {
+            const item = products.find(p => p.id === id);
+            if (item) {
+                cart.push(item);
+                updateCart();
+                cartDrawer.classList.add('open');
+                cartOverlay.classList.add('active');
+            }
+        }
+
+        function removeFromBag(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            cartBadge.textContent = cart.length;
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                const el = document.createElement('div');
+                el.classList.add('cart-item');
+                el.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                    </div>
+                    <button class="remove-item" onclick="removeFromBag(${index})">&times;</button>
+                `;
+                cartItemsContainer.appendChild(el);
+            });
+
+            cartTotalEl.textContent = `$${total.toLocaleString()}`;
+            document.getElementById('checkoutTotal').textContent = `$${total.toLocaleString()}`;
+        }
+
+        // --- CHECKOUT MODAL LOGIC ---
+        const checkoutModal = document.getElementById('checkoutModal');
+        const openCheckoutBtn = document.getElementById('openCheckout');
+        const closeCheckoutBtn = document.getElementById('closeCheckout');
+
         openCheckoutBtn.addEventListener('click', () => {
-            if(cart.length === 0) {
-                alert('Your bag is currently empty.');
+            if (cart.length === 0) {
+                alert('Your bag is empty.');
                 return;
             }
             cartDrawer.classList.remove('open');
@@ -1121,69 +1197,14 @@
             cartOverlay.classList.remove('active');
         });
 
-        window.addToBag = function(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            updateCartUI();
-            cartDrawer.classList.add('open');
-            cartOverlay.classList.add('active');
-        };
-
-        function updateCartUI() {
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-            let totalCount = 0;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Your bag is empty.</p>';
-            } else {
-                cart.forEach(item => {
-                    total += item.price * item.quantity;
-                    totalCount += item.quantity;
-
-                    const itemElement = document.createElement('div');
-                    itemElement.classList.add('cart-item');
-                    itemElement.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">$${item.price.toLocaleString()} x ${item.quantity}</div>
-                        </div>
-                        <button class="remove-item" onclick="removeFromCart('${item.id}')">&times;</button>
-                    `;
-                    cartItemsContainer.appendChild(itemElement);
-                });
-            }
-
-            cartBadge.textContent = totalCount;
-            cartTotal.textContent = `$${total.toLocaleString()}`;
-            checkoutTotal.textContent = `$${total.toLocaleString()}`;
-        }
-
-        window.removeFromCart = function(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCartUI();
-        };
-
         function handleCheckout(e) {
             e.preventDefault();
-            alert('Thank you for your order! Your purchase with NEGATTRA was successful.');
+            alert('Thank you for your order. Your purchase is being processed.');
             cart = [];
-            updateCartUI();
+            updateCart();
             checkoutModal.classList.remove('active');
             cartOverlay.classList.remove('active');
         }
-
-        // Initialize Product Section on load
-        renderProducts();
     </script>
 </body>
 </html>
