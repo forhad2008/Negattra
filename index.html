@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEGATTRA | High Fashion & Luxury</title>
+    <title>NEGATTRA | Modern Industrial Atelier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- RESET & GLOBAL STYLES --- */
+        /* --- RESET & DESIGN SYSTEM --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-card: #121212;
-            --text-main: #f5f5f5;
-            --text-muted: #a0a0a0;
-            --accent: #d4af37; /* Subtle metallic gold tint */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-heading: 'Cinzel', serif;
-            --font-body: 'Montserrat', sans-serif;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --bg-black: #050505;
+            --bg-surface: #0e0e0e;
+            --bg-card: #141414;
+            --text-primary: #ffffff;
+            --text-secondary: #8e8e93;
+            --accent-green: #00ff66; /* Vicinity-style highlight tint */
+            --accent-border: #222222;
+            --accent-border-active: #ffffff;
+            --font-head: 'Chakra Petch', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--bg-black);
+            color: var(--text-primary);
             font-family: var(--font-body);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.4;
         }
 
         a {
@@ -45,487 +50,560 @@
             text-decoration: none;
         }
 
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
         img {
-            max-width: 100%;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
+        }
+
+        /* Utility Ticker */
+        .top-ticker {
+            background: var(--text-primary);
+            color: var(--bg-black);
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.4rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker-track {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* --- NAVIGATION --- */
         header {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
             z-index: 1000;
-            padding: 1.5rem 4rem;
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--accent-border);
+            transition: var(--transition-fast);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.9), rgba(10,10,10,0));
-            transition: var(--transition);
         }
 
-        header.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 4rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .brand-logo img {
-            height: 40px;
-            
-            transition: var(--transition);
-        }
-
-        .nav-links {
+        .brand-logo {
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
             display: flex;
-            gap: 2.5rem;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo span {
+            color: var(--accent-green);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
             list-style: none;
             align-items: center;
         }
 
-        .nav-links a, .nav-links button.custom-text-btn {
+        .nav-link {
+            font-family: var(--font-head);
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-            position: relative;
-            opacity: 0.8;
-            transition: var(--transition);
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            font-family: inherit;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
         }
 
-        .nav-links a:hover, .nav-links button.custom-text-btn:hover {
-            opacity: 1;
-            color: var(--accent);
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Mobile Nav Close Button */
-        .close-nav-btn {
-            display: none;
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 2.2rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        /* Custom Monogram Feature Dropdown */
-        .custom-text-wrapper {
+        /* Custom Atelier Dropdown */
+        .atelier-wrapper {
             position: relative;
         }
 
-        .custom-text-dropdown {
+        .atelier-dropdown {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 1rem);
             left: 50%;
             transform: translateX(-50%) translateY(10px);
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            width: 280px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: var(--bg-card);
+            border: 1px solid var(--accent-border-active);
+            padding: 1.25rem;
+            width: 300px;
             opacity: 0;
             visibility: hidden;
-            transition: var(--transition);
-            z-index: 101;
+            transition: var(--transition-smooth);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
 
-        .custom-text-dropdown.active {
+        .atelier-dropdown.active {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
         }
 
-        .custom-text-dropdown h5 {
-            font-family: var(--font-heading);
-            font-size: 0.85rem;
+        .atelier-dropdown h5 {
+            font-family: var(--font-head);
+            font-size: 0.8rem;
+            text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
-            color: var(--accent);
+            color: var(--accent-green);
         }
 
-        .custom-text-dropdown p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .custom-text-input {
+        .atelier-dropdown input {
             width: 100%;
-            padding: 0.5rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
+            padding: 0.6rem 0.8rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--accent-border);
+            color: var(--text-primary);
             font-family: var(--font-body);
             font-size: 0.85rem;
-            margin-bottom: 0.8rem;
+            margin: 0.8rem 0;
+        }
+
+        .atelier-dropdown input:focus {
+            border-color: var(--accent-green);
             outline: none;
         }
 
-        .custom-text-input:focus {
-            border-color: var(--accent);
-        }
-
-        .btn-apply-text {
+        .btn-black {
             width: 100%;
-            padding: 0.5rem;
-            background-color: var(--text-main);
-            color: #000;
-            border: none;
-            font-size: 0.75rem;
+            padding: 0.75rem;
+            background-color: var(--text-primary);
+            color: var(--bg-black);
+            font-family: var(--font-head);
+            font-weight: 700;
             text-transform: uppercase;
+            font-size: 0.8rem;
             letter-spacing: 1px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-fast);
         }
 
-        .btn-apply-text:hover {
-            background-color: var(--accent);
+        .btn-black:hover {
+            background-color: var(--accent-green);
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
+        .cart-trigger {
             position: relative;
-        }
-
-        .icon-btn:hover {
-            color: var(--accent);
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -6px;
-            right: -8px;
-            background-color: var(--accent);
-            color: #000;
-            font-size: 0.65rem;
+            font-family: var(--font-head);
             font-weight: 700;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            background: var(--bg-surface);
+            border: 1px solid var(--accent-border);
+            padding: 0.5rem 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .cart-trigger:hover {
+            border-color: var(--accent-border-active);
+        }
+
+        .cart-count {
+            background: var(--accent-green);
+            color: var(--bg-black);
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 2px;
+            margin-left: 0.4rem;
         }
 
         .hamburger {
             display: none;
-            cursor: pointer;
             flex-direction: column;
             gap: 5px;
+            padding: 0.5rem;
         }
 
         .hamburger span {
-            width: 25px;
+            width: 22px;
             height: 2px;
-            background-color: var(--text-main);
-            transition: var(--transition);
+            background-color: var(--text-primary);
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(10, 10, 10, 1)), 
-                        url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-            text-align: center;
-            padding: 0 1rem;
+            min-height: calc(100vh - 80px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--accent-border);
         }
 
-        .hero-content {
-            max-width: 800px;
-            animation: fadeIn 1.5s ease-out;
+        .hero-left {
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid var(--accent-border);
+        }
+
+        .hero-tag {
+            font-family: var(--font-head);
+            color: var(--accent-green);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-title-box {
+            margin: 2rem 0;
         }
 
         .hero-title {
-            font-family: var(--font-heading);
-            font-size: 4rem;
-            letter-spacing: 6px;
+            font-family: var(--font-head);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 900;
+            line-height: 0.9;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            font-weight: 400;
+            letter-spacing: -2px;
         }
 
-        .custom-preview-display {
-            font-family: var(--font-heading);
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            color: var(--accent);
+        .monogram-preview {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
             text-transform: uppercase;
-            min-height: 2rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            display: inline-block;
-            padding: 0 1rem;
+            border-left: 2px solid var(--accent-green);
+            padding-left: 1rem;
         }
 
-        .hero-subtitle {
-            font-size: 1rem;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 2.5rem;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border: 1px solid var(--text-main);
-            color: var(--text-main);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+        .hero-right {
             position: relative;
+            background: var(--bg-surface);
             overflow: hidden;
-            transition: var(--transition);
-            background: transparent;
-            cursor: pointer;
         }
 
-        .btn-primary:hover {
-            color: #000;
-            background-color: var(--text-main);
-            border-color: var(--text-main);
+        .hero-img-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
-        /* --- FEATURED COLLECTION --- */
-        .section {
-            padding: 8rem 4rem;
+        .hero-img-wrapper img {
+            filter: grayscale(30%) contrast(110%);
+            transition: var(--transition-smooth);
         }
 
-        .section-header {
+        .hero-right:hover img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.02);
+        }
+
+        .hero-cta-btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: var(--text-primary);
+            color: var(--bg-black);
+            font-family: var(--font-head);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: var(--transition-fast);
             text-align: center;
-            margin-bottom: 5rem;
+        }
+
+        .hero-cta-btn:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* --- PRODUCT GRID SECTION --- */
+        .section-header {
+            padding: 3rem 3rem 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--accent-border);
         }
 
         .section-title {
-            font-family: var(--font-heading);
+            font-family: var(--font-head);
             font-size: 2.5rem;
-            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-weight: 900;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(4, 1fr);
         }
 
         .product-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
+            background-color: var(--bg-black);
+            border-right: 1px solid var(--accent-border);
+            border-bottom: 1px solid var(--accent-border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .product-card:nth-child(4n) {
+            border-right: none;
+        }
+
+        .product-image-container {
+            aspect-ratio: 4/5;
             position: relative;
             overflow: hidden;
+            background: var(--bg-surface);
         }
 
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.3);
+        .product-image-container img {
+            filter: grayscale(20%);
+            transition: var(--transition-smooth);
         }
 
-        .product-image {
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 3/4;
-            display: block;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .product-card:hover .product-image img {
+        .product-card:hover .product-image-container img {
             transform: scale(1.05);
+            filter: grayscale(0%);
         }
 
-        .product-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .product-category {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        .product-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--bg-black);
+            border: 1px solid var(--accent-border);
+            padding: 0.3rem 0.6rem;
+            font-family: var(--font-head);
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
 
         .product-title {
-            font-family: var(--font-heading);
+            font-family: var(--font-head);
             font-size: 1.1rem;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
         }
 
         .product-price {
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            font-weight: 600;
             font-size: 0.95rem;
-            color: var(--accent);
-            font-weight: 500;
+            margin-bottom: 1.2rem;
         }
 
-        /* --- SHOPPING CART DRAWER --- */
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background-color: var(--bg-card);
-            z-index: 2000;
-            border-left: 1px solid var(--border-color);
-            transition: var(--transition);
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .btn-add-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--accent-border);
+            color: var(--text-primary);
+            font-family: var(--font-head);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: var(--transition-fast);
         }
 
-        .cart-drawer.open {
-            right: 0;
+        .btn-add-cart:hover {
+            background: var(--text-primary);
+            color: var(--bg-black);
+            border-color: var(--text-primary);
         }
 
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
+        /* --- MANIFESTO BANNER --- */
+        .manifesto {
+            padding: 8rem 3rem;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--accent-border);
+            text-align: center;
         }
 
-        .cart-header h3 {
-            font-family: var(--font-heading);
-            letter-spacing: 2px;
+        .manifesto-inner {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .close-cart {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.8rem;
-            cursor: pointer;
+        .manifesto h2 {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
             line-height: 1;
         }
 
-        .cart-items {
+        .manifesto p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* --- CART DRAWER --- */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 450px;
+            max-width: 100%;
+            height: 100vh;
+            background-color: var(--bg-black);
+            border-left: 1px solid var(--accent-border);
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--accent-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .close-btn {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: var(--transition-fast);
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .cart-body {
+            padding: 1.5rem;
             flex-grow: 1;
-            padding: 1.5rem 0;
             overflow-y: auto;
         }
 
-        .cart-empty-text {
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 3rem;
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-border);
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 85px;
+            background: var(--bg-surface);
+            flex-shrink: 0;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-family: var(--font-head);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .cart-item-price {
+            color: var(--text-secondary);
             font-size: 0.85rem;
+            margin-top: 0.2rem;
         }
 
         .cart-footer {
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--accent-border);
+            background: var(--bg-surface);
         }
 
-        .btn-checkout {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--accent);
-            color: #000;
-            border: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-        }
-
-        /* --- BRAND BANNER --- */
-        .brand-banner {
-            height: 60vh;
-            background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)), 
-                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1920&auto=format&fit=crop') fixed center/cover;
+        .cart-total {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .banner-content {
-            max-width: 700px;
-        }
-
-        .banner-content h2 {
-            font-family: var(--font-heading);
-            font-size: 2.5rem;
-            letter-spacing: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .banner-content p {
-            color: var(--text-muted);
-            font-weight: 300;
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
+            justify-content: space-between;
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
         }
 
         /* --- FOOTER --- */
         footer {
-            background-color: #050505;
-            padding: 5rem 4rem 2rem 4rem;
-            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-black);
+            padding: 5rem 3rem 2rem 3rem;
         }
 
         .footer-grid {
@@ -535,73 +613,71 @@
             margin-bottom: 4rem;
         }
 
-        .footer-brand img {
-            height: 35px;
-            filter: invert(1);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            max-width: 300px;
-            line-height: 1.8;
-        }
-
-        .footer-column h4 {
-            font-family: var(--font-heading);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+        .footer-brand-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
+            margin-bottom: 1rem;
         }
 
-        .footer-column ul {
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            max-width: 350px;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-head);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            color: var(--accent-green);
+        }
+
+        .footer-col ul {
             list-style: none;
         }
 
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
+        .footer-col ul li {
+            margin-bottom: 0.6rem;
         }
 
-        .footer-column ul li a {
-            color: var(--text-muted);
+        .footer-col ul li a {
+            color: var(--text-secondary);
             font-size: 0.85rem;
-            transition: var(--transition);
+            transition: var(--transition-fast);
         }
 
-        .footer-column ul li a:hover {
-            color: var(--text-main);
+        .footer-col ul li a:hover {
+            color: var(--text-primary);
         }
 
         .footer-bottom {
             padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--accent-border);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-family: var(--font-head);
+            text-transform: uppercase;
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- RESPONSIVE DESIGN --- */
+        /* --- MOBILE & TABLET RESPONSIVENESS --- */
         @media (max-width: 1024px) {
-            header, footer {
-                padding-left: 2rem;
-                padding-right: 2rem;
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .section {
-                padding: 6rem 2rem;
+            .product-card:nth-child(2n) {
+                border-right: none;
             }
-            .hero-title {
-                font-size: 3rem;
+            .product-card:nth-child(4n) {
+                border-right: 1px solid var(--accent-border);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -610,36 +686,56 @@
                 display: flex;
             }
 
-            .close-nav-btn {
-                display: block;
-            }
-
-            .nav-links {
+            .nav-menu {
                 position: fixed;
                 top: 0;
                 right: -100%;
-                width: 75%;
+                width: 80%;
                 height: 100vh;
-                background-color: var(--bg-card);
+                background: var(--bg-black);
+                border-left: 1px solid var(--accent-border);
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
-                transition: var(--transition);
-                box-shadow: -5px 0 15px rgba(0,0,0,0.8);
-                z-index: 1050;
+                gap: 2rem;
+                transition: var(--transition-smooth);
+                z-index: 1001;
             }
 
-            .nav-links.active {
+            .nav-menu.active {
                 right: 0;
             }
 
-            .hero-title {
-                font-size: 2.2rem;
-                letter-spacing: 4px;
+            .hero {
+                grid-template-columns: 1fr;
             }
 
-            .cart-drawer {
-                width: 100%;
+            .hero-left {
+                border-right: none;
+                border-bottom: 1px solid var(--accent-border);
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-right {
+                min-height: 400px;
+            }
+
+            .section-header {
+                padding: 2rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card {
+                border-right: none !important;
+            }
+
+            .manifesto {
+                padding: 4rem 1.5rem;
             }
 
             .footer-grid {
@@ -650,264 +746,314 @@
             .footer-bottom {
                 flex-direction: column;
                 gap: 1rem;
-                text-align: center;
+            }
+
+            footer {
+                padding: 3rem 1.5rem 1.5rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
 
+    <div class="top-ticker">
+        <div class="ticker-track">
+            WORLDWIDE SHIPPING AVAILABLE // NEGATTRA AUTUMN/WINTER '26 DROPPING NOW // LIMITED QUANTITIES // WORLDWIDE SHIPPING AVAILABLE // NEGATTRA AUTUMN/WINTER '26 DROPPING NOW // LIMITED QUANTITIES //
+        </div>
+    </div>
+
     <header id="navbar">
-        <a href="#" class="brand-logo">
-            <img src="Logo1.png" alt="NEGATTRA Logo">
-        </a>
-        
-        <ul class="nav-links" id="navLinks">
-            <button class="close-nav-btn" id="closeNavBtn" aria-label="Close Menu">&times;</button>
+        <div class="nav-container">
+            <a href="#" class="brand-logo">
+                NEGATTRA<span>.</span>
+            </a>
 
-            <li><a href="#home">Home</a></li>
-            <li><a href="#collection">Collections</a></li>
-            
-            <li class="custom-text-wrapper" id="customTextWrapper">
-                <button class="custom-text-btn" id="customTextBtn">Atelier Text ✨</button>
-                <div class="custom-text-dropdown" id="customTextDropdown">
-                    <h5>Custom Monogram</h5>
-                    <p>Add your personalized initials or tagline to preview on hero items.</p>
-                    <input type="text" id="customInput" class="custom-text-input" placeholder="e.g., N.G. 2026" maxlength="15">
-                    <button class="btn-apply-text" onclick="applyCustomText()">Apply Monogram</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#collection" class="nav-link">Collection</a></li>
+                
+                <li class="atelier-wrapper" id="atelierWrapper">
+                    <button class="nav-link" id="atelierBtn">Atelier Monogram ✨</button>
+                    <div class="atelier-dropdown" id="atelierDropdown">
+                        <h5>Personalize Hero Item</h5>
+                        <input type="text" id="customInput" placeholder="Enter Monogram (e.g., NGT-01)" maxlength="12">
+                        <button class="btn-black" onclick="updateMonogram()">Apply To Screen</button>
+                    </div>
+                </li>
+
+                <li><a href="#manifesto" class="nav-link">Manifesto</a></li>
+                <li><a href="#footer" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="cart-trigger" id="cartBtn">
+                    Bag <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
                 </div>
-            </li>
-
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-
-        <div class="nav-actions">
-            <button class="icon-btn" aria-label="Search" onclick="alert('Search feature activated.')">&#128065;</button>
-            <button class="icon-btn" aria-label="Cart" id="cartBtn">
-                &#128092;
-                <span class="cart-badge" id="cartCount">0</span>
-            </button>
-            <div class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
             </div>
         </div>
     </header>
 
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title">NEGATTRA</h1>
-            <div class="custom-preview-display" id="monogramDisplay">[ Bespoke Couture ]</div>
-            <p class="hero-subtitle">Elegance Redefined • Autumn/Winter '26</p>
-            <a href="#collection" class="btn-primary">Explore Collection</a>
+        <div class="hero-left">
+            <div class="hero-tag"><span>///</span> Autumn-Winter Collection 2026</div>
+            
+            <div class="hero-title-box">
+                <h1 class="hero-title">RAW LUXURY</h1>
+                <div class="monogram-preview" id="monogramDisplay">[ Bespoke Edition ]</div>
+            </div>
+
+            <div>
+                <a href="#collection" class="hero-cta-btn">Shop The Drop</a>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop" alt="Vicinity Style Fashion Hero">
+            </div>
         </div>
     </section>
 
-    <section class="section" id="collection">
+    <section id="collection">
         <div class="section-header">
-            <h2 class="section-title">New Arrivals</h2>
-            <p class="section-subtitle">Crafted for the Extraordinary</p>
+            <h2 class="section-title">Latest Artifacts</h2>
+            <span style="color: var(--text-secondary); font-family: var(--font-head); text-transform: uppercase;">[ 01 — 04 ]</span>
         </div>
 
         <div class="product-grid">
             <div class="product-card">
-                <a href="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop" target="_blank" class="product-image">
-                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" alt="High Fashion Coat">
-                </a>
-                <div class="product-info">
-                    <div class="product-category">Outerwear</div>
-                    <h3 class="product-title">Monochrome Trench</h3>
-                    <div class="product-price">$1,250</div>
+                <div class="product-image-container">
+                    <span class="product-tag">Heavyweight</span>
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" alt="Monochrome Coat">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Monochrome Trench</h3>
+                        <p class="product-price">$1,250 USD</p>
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart('Monochrome Trench', 1250)">Add To Bag +</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <a href="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200&auto=format&fit=crop" target="_blank" class="product-image">
-                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Luxury Evening Dress">
-                </a>
-                <div class="product-info">
-                    <div class="product-category">Evening Wear</div>
-                    <h3 class="product-title">Obsidian Gown</h3>
-                    <div class="product-price">$2,100</div>
+                <div class="product-image-container">
+                    <span class="product-tag">Limited 50 Pcs</span>
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Obsidian Gown">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Obsidian Structure Dress</h3>
+                        <p class="product-price">$2,100 USD</p>
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart('Obsidian Structure Dress', 2100)">Add To Bag +</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <a href="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop" target="_blank" class="product-image">
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Avant Garde Suit">
-                </a>
-                <div class="product-info">
-                    <div class="product-category">Tailored</div>
-                    <h3 class="product-title">Sculpted Blazer</h3>
-                    <div class="product-price">$980</div>
+                <div class="product-image-container">
+                    <span class="product-tag">Custom Fit</span>
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Sculpted Blazer">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Sculpted Blazer</h3>
+                        <p class="product-price">$980 USD</p>
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart('Sculpted Blazer', 980)">Add To Bag +</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <a href="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=1200&auto=format&fit=crop" target="_blank" class="product-image">
-                    <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop" alt="Designer Accessories">
-                </a>
-                <div class="product-info">
-                    <div class="product-category">Accessories</div>
-                    <h3 class="product-title">Structured Tote</h3>
-                    <div class="product-price">$650</div>
+                <div class="product-image-container">
+                    <span class="product-tag">Hardware</span>
+                    <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop" alt="Structured Tote">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Industrial Leather Tote</h3>
+                        <p class="product-price">$650 USD</p>
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart('Industrial Leather Tote', 650)">Add To Bag +</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="brand-banner" id="about">
-        <div class="banner-content">
-            <h2>The Vision</h2>
-            <p>NEGATTRA embodies the harmony of sharp geometries and timeless luxury. Designed for individuals who dictate trends rather than follow them.</p>
-            <a href="#contact" class="btn-primary">Discover the Atelier</a>
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-inner">
+            <h2>Architectural Form.<br>Uncompromising Craft.</h2>
+            <p>NEGATTRA merges high-end luxury silhouettes with industrial streetwear culture. Every piece is crafted in limited batches, featuring premium heavy fabrics, geometric cuts, and sharp detailing for those who define the skyline.</p>
         </div>
     </section>
 
+    <div class="cart-overlay" id="cartOverlay"></div>
     <aside class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
             <h3>Your Shopping Bag</h3>
-            <button class="close-cart" id="closeCartBtn">&times;</button>
+            <button class="close-btn" id="closeCartBtn">&times;</button>
         </div>
-        <div class="cart-items" id="cartItems">
-            <p class="cart-empty-text">Your bag is currently empty.</p>
+        <div class="cart-body" id="cartBody">
+            <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem; font-size: 0.85rem;">Your bag is empty.</p>
         </div>
         <div class="cart-footer">
-            <button class="btn-checkout" onclick="alert('Proceeding to Secure Checkout...')">Checkout</button>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0 USD</span>
+            </div>
+            <button class="btn-black" style="padding: 1rem;" onclick="alert('Proceeding to Checkout...')">Checkout</button>
         </div>
     </aside>
 
-    <footer id="contact">
+    <footer id="footer">
         <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="Logo1.png" alt="NEGATTRA Logo">
-                <p>Defining modern luxury through bold architecture, refined textures, and uncompromised craftsmanship.</p>
+            <div>
+                <div class="footer-brand-title">NEGATTRA.</div>
+                <p class="footer-desc">High fashion redefined through industrial geometry and modern street tailoring.</p>
             </div>
-            <div class="footer-column">
-                <h4>Navigation</h4>
+            <div class="footer-col">
+                <h4>Explore</h4>
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#collection">Collections</a></li>
-                    <li><a href="#about">Story</a></li>
-                    <li><a href="#">Stores</a></li>
+                    <li><a href="#manifesto">Brand Story</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
+            <div class="footer-col">
                 <h4>Client Care</h4>
                 <ul>
-                    <li><a href="#">Contact Support</a></li>
-                    <li><a href="#">Book Appointment</a></li>
+                    <li><a href="#">Support</a></li>
                     <li><a href="#">Shipping & Returns</a></li>
-                    <li><a href="#">Care Guide</a></li>
+                    <li><a href="#">Size Guide</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
+            <div class="footer-col">
                 <h4>Social</h4>
                 <ul>
                     <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Pinterest</a></li>
-                    <li><a href="#">Vogue Runway</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Discord</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 NEGATTRA Couture. All Rights Reserved.</p>
-            <p>Privacy Policy | Terms of Service</p>
+            <div>&copy; 2026 NEGATTRA ATELIER. ALL RIGHTS RESERVED.</div>
+            <div>DESIGNED FOR ALL DEVICES</div>
         </div>
     </footer>
 
     <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+        // Shopping Cart State
+        let cart = [];
 
         // Elements
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        const closeNavBtn = document.getElementById('closeNavBtn');
         const cartBtn = document.getElementById('cartBtn');
         const cartDrawer = document.getElementById('cartDrawer');
+        const cartOverlay = document.getElementById('cartOverlay');
         const closeCartBtn = document.getElementById('closeCartBtn');
-        const customTextBtn = document.getElementById('customTextBtn');
-        const customTextDropdown = document.getElementById('customTextDropdown');
-        const customTextWrapper = document.getElementById('customTextWrapper');
+        const cartCount = document.getElementById('cartCount');
+        const cartBody = document.getElementById('cartBody');
+        const cartTotal = document.getElementById('cartTotal');
 
-        // Mobile menu toggle & close
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navLinks.classList.add('active');
-        });
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
 
-        closeNavBtn.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+        const atelierBtn = document.getElementById('atelierBtn');
+        const atelierDropdown = document.getElementById('atelierDropdown');
+        const atelierWrapper = document.getElementById('atelierWrapper');
 
-        // Close mobile menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Custom Text Dropdown Toggle
-        customTextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            customTextDropdown.classList.toggle('active');
-        });
-
-        // Cart Drawer Open / Close
-        cartBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
+        // Cart Drawer Toggles
+        function openCart() {
             cartDrawer.classList.add('open');
-        });
+            cartOverlay.classList.add('active');
+        }
 
-        closeCartBtn.addEventListener('click', () => {
+        function closeCart() {
             cartDrawer.classList.remove('open');
+            cartOverlay.classList.remove('active');
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // Mobile Menu Toggle
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
         });
 
-        // --- AUTOMATIC CLOSE WHEN TOUCHING / CLICKING OUTSIDE ---
-        document.addEventListener('click', (event) => {
-            // Close mobile menu if clicked outside
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(event.target) && 
-                !hamburger.contains(event.target)) {
-                navLinks.classList.remove('active');
-            }
-
-            // Close cart drawer if clicked outside
-            if (cartDrawer.classList.contains('open') && 
-                !cartDrawer.contains(event.target) && 
-                !cartBtn.contains(event.target)) {
-                cartDrawer.classList.remove('open');
-            }
-
-            // Close custom text menu if clicked outside
-            if (customTextDropdown.classList.contains('active') && 
-                !customTextWrapper.contains(event.target)) {
-                customTextDropdown.classList.remove('active');
+        // Close Mobile Menu on Click Outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                navMenu.classList.remove('active');
             }
         });
 
-        // Apply Custom Monogram Text
-        function applyCustomText() {
-            const inputVal = document.getElementById('customInput').value;
+        // Atelier Dropdown Toggle
+        atelierBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            atelierDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!atelierWrapper.contains(e.target)) {
+                atelierDropdown.classList.remove('active');
+            }
+        });
+
+        // Monogram Customizer
+        function updateMonogram() {
+            const val = document.getElementById('customInput').value.trim();
             const display = document.getElementById('monogramDisplay');
-            
-            if (inputVal.trim() !== '') {
-                display.textContent = `[ ${inputVal.trim()} ]`;
+            if (val !== '') {
+                display.textContent = `[ ${val} ]`;
             } else {
-                display.textContent = '[ Bespoke Couture ]';
+                display.textContent = '[ Bespoke Edition ]';
             }
-            customTextDropdown.classList.remove('active');
+            atelierDropdown.classList.remove('active');
+        }
+
+        // Add to Cart Logic
+        function addToCart(title, price) {
+            cart.push({ title, price });
+            renderCart();
+            openCart();
+        }
+
+        function renderCart() {
+            cartCount.textContent = cart.length;
+
+            if (cart.length === 0) {
+                cartBody.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem; font-size: 0.85rem;">Your bag is empty.</p>`;
+                cartTotal.textContent = '$0 USD';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">$${item.price} USD</div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" style="color: red; font-size: 0.75rem; font-family: var(--font-head);">REMOVE</button>
+                    </div>
+                `;
+            });
+
+            cartBody.innerHTML = html;
+            cartTotal.textContent = `$${total.toLocaleString()} USD`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
         }
     </script>
 </body>
