@@ -648,7 +648,7 @@
 
         /* --- CONTACT MESSAGE SECTION (60% Smaller, White Edition, No Radius) --- */
         .contact-section {
-            max-width: 260px; /* Reduced by 60% (from 650px) */
+            max-width: 260px; /* Reduced by 60% */
             margin: 0 auto;
             background: #ffffff;
             padding: 1.5rem 1rem;
@@ -693,6 +693,13 @@
             color: #ffffff;
             border-color: #333333;
             box-shadow: none;
+        }
+
+        #form-status {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: none;
         }
 
         /* --- FOOTER --- */
@@ -947,24 +954,25 @@
             <p class="section-subtitle">Direct Inquiry to Our Atelier</p>
         </div>
         <div class="contact-section">
-            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST">
+            <form id="google-sheet-form">
                 <div class="form-group">
                     <label>Your Name</label>
-                    <input type="text" name="name" required placeholder="e.g. Eleanor Vance">
+                    <input type="text" name="Name" required placeholder="e.g. Eleanor Vance">
                 </div>
                 <div class="form-group">
                     <label>Your Email Address</label>
-                    <input type="email" name="email" required placeholder="eleanor@atelier.com">
+                    <input type="email" name="Email" required placeholder="eleanor@atelier.com">
                 </div>
                 <div class="form-group">
                     <label>Subject</label>
-                    <input type="text" name="subject" required placeholder="Custom Design / General Inquiry">
+                    <input type="text" name="Subject" required placeholder="Custom Design / General Inquiry">
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea name="message" rows="4" required placeholder="Write your message here..."></textarea>
+                    <textarea name="Message" rows="4" required placeholder="Write your message here..."></textarea>
                 </div>
-                <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Send Message</button>
+                <button type="submit" id="submit-btn" class="btn-primary" style="margin-top: 0.5rem;">Send Message</button>
+                <div id="form-status"></div>
             </form>
         </div>
     </section>
@@ -1010,6 +1018,41 @@
     </footer>
 
     <script>
+        // --- GOOGLE SHEETS FORM SUBMISSION ---
+        // REPLACE THIS URL WITH YOUR PUBLISHED APPS SCRIPT WEB APP URL
+        const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+        
+        const form = document.getElementById('google-sheet-form');
+        const statusDiv = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (form) {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Sending...';
+                statusDiv.style.display = 'block';
+                statusDiv.style.color = '#333';
+                statusDiv.innerText = 'Sending message...';
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then(response => {
+                        statusDiv.style.color = 'green';
+                        statusDiv.innerText = 'Message sent successfully!';
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = 'Send Message';
+                        form.reset();
+                    })
+                    .catch(error => {
+                        statusDiv.style.color = 'red';
+                        statusDiv.innerText = 'Error sending message.';
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = 'Send Message';
+                        console.error('Error!', error.message);
+                    });
+            });
+        }
+
         // --- BACKGROUND ANIMATION CONTROLLER ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
