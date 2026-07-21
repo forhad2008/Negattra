@@ -646,15 +646,53 @@
             font-size: 1rem;
         }
 
-        /* --- CONTACT MESSAGE SECTION --- */
+        /* --- CONTACT MESSAGE SECTION (60% Smaller, White Edition, No Radius) --- */
         .contact-section {
-            max-width: 650px;
+            max-width: 260px; /* Reduced by 60% (from 650px) */
             margin: 0 auto;
-            background: var(--bg-card);
-            padding: 3.5rem 2.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            backdrop-filter: blur(10px);
+            background: #ffffff;
+            padding: 1.5rem 1rem;
+            border: 1px solid #000000;
+            border-radius: 0px; /* No Radius */
+            color: #000000;
+        }
+
+        .contact-section .form-group label {
+            color: #000000;
+            font-weight: 600;
+            font-size: 0.65rem;
+        }
+
+        .contact-section .form-group input, 
+        .contact-section .form-group textarea {
+            background: #ffffff;
+            border: 1px solid #333333;
+            color: #000000;
+            border-radius: 0px; /* No Radius */
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .contact-section .form-group input:focus, 
+        .contact-section .form-group textarea:focus {
+            border-color: #000000;
+            outline: none;
+        }
+
+        .contact-section .btn-primary {
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 0px; /* No Radius */
+            padding: 0.6rem;
+            font-size: 0.75rem;
+        }
+
+        .contact-section .btn-primary:hover {
+            background: #333333;
+            color: #ffffff;
+            border-color: #333333;
+            box-shadow: none;
         }
 
         /* --- FOOTER --- */
@@ -924,9 +962,9 @@
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea name="message" rows="5" required placeholder="Write your message here..."></textarea>
+                    <textarea name="message" rows="4" required placeholder="Write your message here..."></textarea>
                 </div>
-                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Send Message</button>
+                <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Send Message</button>
             </form>
         </div>
     </section>
@@ -1053,37 +1091,111 @@
                 id: "4",
                 category: "Accessories",
                 name: "Structured Tote",
-                price: 650,
-                image: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?q=80&w=800&auto=format&fit=crop",
+                price: 750,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop",
                 link: "product4.html"
             }
         ];
 
-        // --- RENDER PRODUCTS CONTROLLER ---
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
-
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.classList.add('product-card');
-                card.innerHTML = `
+        // --- RENDER PRODUCTS ---
+        const productGrid = document.getElementById('productGrid');
+        if (productGrid) {
+            productGrid.innerHTML = products.map(product => `
+                <div class="product-card">
                     <a href="${product.link}" class="product-image">
                         <img src="${product.image}" alt="${product.name}">
                     </a>
                     <div class="product-info">
                         <div>
-                            <div class="product-category">${product.category}</div>
+                            <span class="product-category">${product.category}</span>
                             <a href="${product.link}" class="product-title">${product.name}</a>
-                            <div class="product-price">$${product.price.toLocaleString()}</div>
+                            <div class="product-price">$${product.price}</div>
                         </div>
-                        <button class="btn-add-cart" onclick="addToBag('${product.id}')">Add to Bag</button>
+                        <button class="btn-add-cart" onclick="addToCart('${product.id}')">Add to Bag</button>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+                </div>
+            `).join('');
         }
-        renderProducts();
+
+        // --- CART SYSTEM ---
+        let cart = [];
+        const openCartBtn = document.getElementById('openCart');
+        const closeCartBtn = document.getElementById('closeCart');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalElem = document.getElementById('cartTotal');
+        const cartBadge = document.getElementById('cartBadge');
+
+        function toggleCart() {
+            cartDrawer.classList.toggle('open');
+            cartOverlay.classList.toggle('active');
+        }
+
+        if (openCartBtn) openCartBtn.addEventListener('click', toggleCart);
+        if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCart);
+        if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                updateCartUI();
+                if (!cartDrawer.classList.contains('open')) toggleCart();
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            cartBadge.textContent = cart.length;
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotalElem.textContent = `$${subtotal}`;
+            document.getElementById('checkoutTotal').textContent = `$${subtotal}`;
+
+            cartItemsContainer.innerHTML = cart.length === 0 ? 
+                '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your bag is empty.</p>' :
+                cart.map((item, idx) => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${idx})">&times;</button>
+                    </div>
+                `).join('');
+        }
+
+        // --- CHECKOUT MODAL SYSTEM ---
+        const checkoutModal = document.getElementById('checkoutModal');
+        const openCheckoutBtn = document.getElementById('openCheckout');
+        const closeCheckoutBtn = document.getElementById('closeCheckout');
+
+        function toggleCheckout() {
+            if (cart.length === 0 && !checkoutModal.classList.contains('active')) {
+                alert('Your bag is empty!');
+                return;
+            }
+            checkoutModal.classList.toggle('active');
+        }
+
+        if (openCheckoutBtn) openCheckoutBtn.addEventListener('click', () => {
+            toggleCart();
+            toggleCheckout();
+        });
+        if (closeCheckoutBtn) closeCheckoutBtn.addEventListener('click', toggleCheckout);
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            alert('Thank you for your order. Your purchase has been processed.');
+            cart = [];
+            updateCartUI();
+            toggleCheckout();
+        }
 
         // --- NAVBAR SCROLL EFFECT ---
         const navbar = document.getElementById('navbar');
@@ -1095,115 +1207,14 @@
             }
         });
 
-        // --- MOBILE MENU TOGGLE & OUTSIDE TOUCH TO CLOSE ---
+        // --- MOBILE MENU ---
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside or on a link
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
             });
-        });
-
-        // --- CART DRAWER LOGIC ---
-        let cart = [];
-        const cartDrawer = document.getElementById('cartDrawer');
-        const cartOverlay = document.getElementById('cartOverlay');
-        const openCartBtn = document.getElementById('openCart');
-        const closeCartBtn = document.getElementById('closeCart');
-        const cartBadge = document.getElementById('cartBadge');
-        const cartItemsContainer = document.getElementById('cartItems');
-        const cartTotalEl = document.getElementById('cartTotal');
-
-        function toggleCart() {
-            cartDrawer.classList.toggle('open');
-            cartOverlay.classList.toggle('active');
-        }
-
-        openCartBtn.addEventListener('click', toggleCart);
-        closeCartBtn.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', () => {
-            cartDrawer.classList.remove('open');
-            cartOverlay.classList.remove('active');
-            checkoutModal.classList.remove('active');
-        });
-
-        function addToBag(id) {
-            const item = products.find(p => p.id === id);
-            if (item) {
-                cart.push(item);
-                updateCart();
-                cartDrawer.classList.add('open');
-                cartOverlay.classList.add('active');
-            }
-        }
-
-        function removeFromBag(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function updateCart() {
-            cartBadge.textContent = cart.length;
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                total += item.price;
-                const el = document.createElement('div');
-                el.classList.add('cart-item');
-                el.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="cart-item-details">
-                        <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromBag(${index})">&times;</button>
-                `;
-                cartItemsContainer.appendChild(el);
-            });
-
-            cartTotalEl.textContent = `$${total.toLocaleString()}`;
-            document.getElementById('checkoutTotal').textContent = `$${total.toLocaleString()}`;
-        }
-
-        // --- CHECKOUT MODAL LOGIC ---
-        const checkoutModal = document.getElementById('checkoutModal');
-        const openCheckoutBtn = document.getElementById('openCheckout');
-        const closeCheckoutBtn = document.getElementById('closeCheckout');
-
-        openCheckoutBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                alert('Your bag is empty.');
-                return;
-            }
-            cartDrawer.classList.remove('open');
-            checkoutModal.classList.add('active');
-        });
-
-        closeCheckoutBtn.addEventListener('click', () => {
-            checkoutModal.classList.remove('active');
-            cartOverlay.classList.remove('active');
-        });
-
-        function handleCheckout(e) {
-            e.preventDefault();
-            alert('Thank you for your order. Your purchase is being processed.');
-            cart = [];
-            updateCart();
-            checkoutModal.classList.remove('active');
-            cartOverlay.classList.remove('active');
         }
     </script>
 </body>
