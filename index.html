@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- RESET & GLOBAL STYLES --- */
+        /* --- RESET & GLOBAL VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -18,15 +18,15 @@
 
         :root {
             --bg-dark: #000000;
-            --bg-card: rgba(22, 22, 24, 0.85);
+            --bg-card: rgba(18, 18, 20, 0.85);
             --text-main: #ffffff;
             --text-muted: #c0c0c0;
             --accent: #ffd700;
             --accent-glow: rgba(255, 215, 0, 0.4);
-            --border-color: rgba(255, 255, 255, 0.22);
+            --border-color: rgba(255, 255, 255, 0.18);
             --font-heading: 'Cinzel', serif;
             --font-body: 'Montserrat', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         html {
@@ -42,7 +42,7 @@
             position: relative;
         }
 
-        /* Animated Dark Canvas Background */
+        /* --- NOTICEABLE ANIMATED BACKGROUND CANVAS --- */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -64,7 +64,7 @@
             display: block;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- HEADER & NAVIGATION --- */
         header {
             position: fixed;
             top: 0;
@@ -88,7 +88,7 @@
         }
 
         .brand-logo img {
-            height: 80px;
+            height: 60px;
             filter: invert(1) brightness(1.4);
             transition: var(--transition);
         }
@@ -171,13 +171,14 @@
             justify-content: center;
         }
 
+        /* --- HAMBURGER MENU (MOBILE) --- */
         .hamburger {
             display: none;
             cursor: pointer;
             flex-direction: column;
             justify-content: space-between;
-            height: 24px;
-            width: 30px;
+            height: 22px;
+            width: 28px;
             z-index: 1100;
         }
 
@@ -185,7 +186,20 @@
             width: 100%;
             height: 2px;
             background-color: var(--text-main);
+            border-radius: 2px;
             transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
         }
 
         /* --- SHOPPING CART DRAWER --- */
@@ -240,6 +254,45 @@
             gap: 1.2rem;
         }
 
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 75px;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
         .cart-footer {
             border-top: 1px solid var(--border-color);
             padding-top: 1.5rem;
@@ -275,6 +328,45 @@
             pointer-events: auto;
         }
 
+        /* --- CHECKOUT MODAL --- */
+        .checkout-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 480px;
+            background: #111113;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            z-index: 1300;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .checkout-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+        }
+
+        .checkout-header h3 {
+            font-family: var(--font-heading);
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
         /* --- HERO SECTION --- */
         .hero {
             height: 100vh;
@@ -295,23 +387,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.95)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.95)), 
                         url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             z-index: 0;
-            animation: heroBgPulse 14s ease-in-out infinite alternate;
+            animation: heroBgPulse 12s ease-in-out infinite alternate;
         }
 
         @keyframes heroBgPulse {
-            0% { transform: scale(1); filter: brightness(1) contrast(1); }
-            50% { transform: scale(1.08); filter: brightness(1.15) contrast(1.1); }
-            100% { transform: scale(1.03); filter: brightness(0.9) contrast(1.05); }
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.08); filter: brightness(1.15); }
+            100% { transform: scale(1.03); filter: brightness(0.9); }
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
-            animation: luxuryReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeIn 1.5s ease-out;
         }
 
         .hero-title {
@@ -321,7 +413,6 @@
             text-transform: uppercase;
             margin-bottom: 1rem;
             font-weight: 600;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         .hero-subtitle {
@@ -342,33 +433,32 @@
             font-size: 0.85rem;
             letter-spacing: 2px;
             font-weight: 600;
-            position: relative;
-            overflow: hidden;
             transition: var(--transition);
             background: transparent;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn-primary:hover {
             color: #000;
             background-color: var(--accent);
             border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* --- FEATURED COLLECTION --- */
+        /* --- FEATURED COLLECTION SECTION --- */
         .section {
-            padding: 8rem 4rem;
+            padding: 7rem 4rem;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
         .section-title {
             font-family: var(--font-heading);
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
@@ -376,7 +466,7 @@
 
         .section-subtitle {
             color: var(--accent);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 500;
@@ -384,8 +474,8 @@
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
         }
 
         .product-card {
@@ -416,7 +506,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s ease;
+            transition: transform 0.6s ease;
         }
 
         .product-card:hover .product-image img {
@@ -433,7 +523,7 @@
         }
 
         .product-category {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -442,7 +532,7 @@
 
         .product-title {
             font-family: var(--font-heading);
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
             display: block;
@@ -454,7 +544,7 @@
         }
 
         .product-price {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--accent);
             font-weight: 600;
             margin-bottom: 1rem;
@@ -479,23 +569,48 @@
             border-color: var(--text-main);
         }
 
-        /* --- HIGH-END LUXURY CONTACT FORM (COMPACT, BLACK & WHITE, ANIMATED) --- */
+        /* --- BRAND BANNER --- */
+        .brand-banner {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1920&auto=format&fit=crop') fixed center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .banner-content {
+            max-width: 650px;
+        }
+
+        .banner-content h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .banner-content p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        /* --- REFINED BLACK & WHITE COMPACT CONTACT FORM --- */
         .contact-section {
             max-width: 320px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 2.2rem 1.8rem;
+            padding: 2rem 1.8rem;
             border: 1px solid #000000;
             border-radius: 0px;
             color: #000000;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: luxuryFloat 6s ease-in-out infinite alternate;
-            position: relative;
-        }
-
-        @keyframes luxuryFloat {
-            0% { transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
-            100% { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(255, 215, 0, 0.15); }
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .contact-title {
@@ -507,25 +622,22 @@
             margin-bottom: 1.5rem;
             font-weight: 700;
             color: #000000;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid #e0e0e0;
             padding-bottom: 0.8rem;
         }
 
         .contact-section .form-group {
-            margin-bottom: 1.2rem;
-            position: relative;
+            margin-bottom: 1.1rem;
         }
 
         .contact-section .form-group label {
             display: block;
             color: #000000;
-            font-family: var(--font-body);
             font-weight: 600;
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 0.4rem;
-            transition: var(--transition);
         }
 
         .contact-section .form-group input, 
@@ -535,12 +647,11 @@
             border: 1px solid #cccccc;
             color: #000000;
             border-radius: 0px;
-            padding: 0.65rem 0.8rem;
+            padding: 0.6rem 0.8rem;
             font-family: var(--font-body);
             font-size: 0.8rem;
             letter-spacing: 0.5px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-sizing: border-box;
+            transition: all 0.2s ease-in-out;
         }
 
         .contact-section .form-group input::placeholder,
@@ -554,8 +665,6 @@
             border-color: #000000;
             outline: none;
             background: #fafafa;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transform: scale(1.01);
         }
 
         .contact-section .btn-submit {
@@ -564,38 +673,20 @@
             color: #ffffff;
             border: 1px solid #000000;
             border-radius: 0px;
-            padding: 0.85rem;
+            padding: 0.8rem;
             font-family: var(--font-body);
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             margin-top: 0.5rem;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .contact-section .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: -1;
         }
 
         .contact-section .btn-submit:hover {
+            background: #ffffff;
             color: #000000;
-        }
-
-        .contact-section .btn-submit:hover::before {
-            left: 0;
         }
 
         #form-status {
@@ -611,7 +702,7 @@
         /* --- FOOTER --- */
         footer {
             background-color: rgba(5, 5, 5, 0.95);
-            padding: 5rem 4rem 2rem 4rem;
+            padding: 4rem 4rem 2rem 4rem;
             border-top: 1px solid var(--border-color);
         }
 
@@ -619,28 +710,28 @@
             display: grid;
             grid-template-columns: 2fr repeat(3, 1fr);
             gap: 3rem;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .footer-brand img {
             height: 40px;
             filter: invert(1) brightness(1.4);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .footer-brand p {
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             max-width: 300px;
             line-height: 1.8;
         }
 
         .footer-column h4 {
             font-family: var(--font-heading);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             color: var(--accent);
         }
 
@@ -654,7 +745,7 @@
 
         .footer-column ul li a {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             transition: var(--transition);
         }
 
@@ -668,21 +759,106 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes luxuryReveal {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- RESPONSIVE STYLES FOR ALL DEVICE SIZES --- */
+        /* Laptops & Tablets (1024px and below) */
+        @media (max-width: 1024px) {
+            header, footer {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+            .section {
+                padding: 5rem 2rem;
+            }
+            .hero-title {
+                font-size: 3.2rem;
+            }
+        }
+
+        /* Mobile Screens (768px and below) */
         @media (max-width: 768px) {
-            header, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .hero-title { font-size: 2.4rem; }
-            .section { padding: 4rem 1.5rem; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .brand-logo img {
+                height: 45px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: rgba(10, 10, 12, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -10px 0 25px rgba(0,0,0,0.9);
+                border-left: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .cart-drawer {
+                width: 100%;
+                right: -100%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Small Phones (480px and below) */
+        @media (max-width: 480px) {
+            .contact-section {
+                width: 90%;
+                padding: 1.5rem 1.2rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -698,15 +874,16 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">Home</a></li>
             <li><a href="#collection">Collections</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
         <div class="nav-actions">
-            <button class="icon-btn" id="openCart" aria-label="Cart">
+            <button class="icon-btn" id="openCart" aria-label="Cart" title="Bag">
                 &#128092;
                 <span class="cart-badge" id="cartBadge">0</span>
             </button>
-            <div class="hamburger" id="hamburger">
+            <div class="hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -726,9 +903,31 @@
                 <span>Subtotal</span>
                 <span id="cartTotal">$0</span>
             </div>
-            <button class="btn-primary" style="width: 100%;">Checkout</button>
+            <button class="btn-primary" id="openCheckout" style="width: 100%;">Checkout</button>
         </div>
     </aside>
+
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-header">
+            <h3>CHECKOUT</h3>
+            <button class="close-cart" id="closeCheckout">&times;</button>
+        </div>
+        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="font-size: 0.7rem; color: var(--text-muted);">FULL NAME</label>
+                <input type="text" required placeholder="Eleanor Vance" style="width: 100%; padding: 0.6rem; background: #1a1a1c; border: 1px solid var(--border-color); color: #fff;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="font-size: 0.7rem; color: var(--text-muted);">EMAIL ADDRESS</label>
+                <input type="email" required placeholder="eleanor@atelier.com" style="width: 100%; padding: 0.6rem; background: #1a1a1c; border: 1px solid var(--border-color); color: #fff;">
+            </div>
+            <div class="cart-total" style="margin-top: 1.5rem;">
+                <span>Total Amount</span>
+                <span id="checkoutTotal">$0</span>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Complete Purchase</button>
+        </form>
+    </div>
 
     <section class="hero" id="home">
         <div class="hero-content">
@@ -743,7 +942,16 @@
             <h2 class="section-title">New Arrivals</h2>
             <p class="section-subtitle">Crafted for the Extraordinary</p>
         </div>
+
         <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="brand-banner" id="about">
+        <div class="banner-content">
+            <h2>The Vision</h2>
+            <p>NEGATTRA embodies the harmony of sharp geometries and timeless luxury. Designed for individuals who dictate trends rather than follow them.</p>
+            <a href="#contact" class="btn-primary">Discover the Atelier</a>
+        </div>
     </section>
 
     <section class="section" id="contact">
@@ -788,31 +996,35 @@
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#collection">Collections</a></li>
+                    <li><a href="#about">Story</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>Client Care</h4>
                 <ul>
                     <li><a href="#contact">Contact Support</a></li>
-                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Book Appointment</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>Social</h4>
                 <ul>
                     <li><a href="#">Instagram</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Pinterest</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 NEGATTRA Couture. All Rights Reserved.</p>
+            <p>Privacy Policy | Terms of Service</p>
         </div>
     </footer>
 
     <script>
-        // --- GOOGLE SHEETS FORM HANDLER ---
+        // --- GOOGLE SHEETS FORM SUBMISSION ---
+        // Replace with your Google Apps Script Web App URL
         const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+        
         const form = document.getElementById('google-sheet-form');
         const statusDiv = document.getElementById('form-status');
         const submitBtn = document.getElementById('submit-btn');
@@ -821,29 +1033,30 @@
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 submitBtn.disabled = true;
-                submitBtn.innerText = 'Sending...';
+                submitBtn.innerText = 'SENDING...';
                 statusDiv.style.display = 'block';
-                statusDiv.style.color = '#000000';
-                statusDiv.innerText = 'Transmitting...';
+                statusDiv.style.color = '#333';
+                statusDiv.innerText = 'Sending message...';
 
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then(response => {
                         statusDiv.style.color = 'green';
-                        statusDiv.innerText = 'Message Delivered.';
+                        statusDiv.innerText = 'SENT SUCCESSFULLY!';
                         submitBtn.disabled = false;
-                        submitBtn.innerText = 'Send Message';
+                        submitBtn.innerText = 'SEND MESSAGE';
                         form.reset();
                     })
                     .catch(error => {
                         statusDiv.style.color = 'red';
-                        statusDiv.innerText = 'Transmission Failed.';
+                        statusDiv.innerText = 'ERROR SENDING MESSAGE.';
                         submitBtn.disabled = false;
-                        submitBtn.innerText = 'Send Message';
+                        submitBtn.innerText = 'SEND MESSAGE';
+                        console.error('Error!', error.message);
                     });
             });
         }
 
-        // --- BACKGROUND CANVAS ANIMATION ---
+        // --- HIGH VISIBILITY ANIMATED CANVAS BACKGROUND ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, step = 0;
@@ -855,46 +1068,95 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        function drawBackgroundAnimation() {
-            step += 0.003;
+        function drawAnimatedBackground() {
+            step += 0.005;
             ctx.clearRect(0, 0, width, height);
 
-            const x1 = width * (0.5 + 0.3 * Math.cos(step));
-            const y1 = height * (0.5 + 0.3 * Math.sin(step));
-            const x2 = width * (0.5 - 0.3 * Math.cos(step));
-            const y2 = height * (0.5 - 0.3 * Math.sin(step));
+            // Dynamic color oscillation gradient
+            const x1 = width * (0.5 + 0.4 * Math.cos(step));
+            const y1 = height * (0.5 + 0.4 * Math.sin(step));
+            const x2 = width * (0.5 - 0.4 * Math.cos(step));
+            const y2 = height * (0.5 - 0.4 * Math.sin(step));
 
             const grad = ctx.createLinearGradient(x1, y1, x2, y2);
             grad.addColorStop(0, '#000000');
-            grad.addColorStop(0.5, '#0d0d12');
-            grad.addColorStop(1, '#181508');
+            grad.addColorStop(0.5, '#121218');
+            grad.addColorStop(1, '#221c08');
 
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, width, height);
 
-            requestAnimationFrame(drawBackgroundAnimation);
-        }
-        drawBackgroundAnimation();
+            // Dynamic glowing wave effect
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.5);
+            for (let x = 0; x <= width; x += 15) {
+                const y = Math.sin(x * 0.003 + step * 2) * 80 + Math.cos(x * 0.001 + step) * 40 + height * 0.5;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
 
-        // --- PRODUCTS DATA STORE ---
+            const waveGrad = ctx.createLinearGradient(0, height * 0.2, width, height);
+            waveGrad.addColorStop(0, 'rgba(255, 215, 0, 0.08)');
+            waveGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = waveGrad;
+            ctx.fill();
+            ctx.restore();
+
+            requestAnimationFrame(drawAnimatedBackground);
+        }
+        drawAnimatedBackground();
+
+        // --- PRODUCT DATA STORE ---
         const products = [
-            { id: "1", category: "Outerwear", name: "Monochrome Trench", price: 1250, image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" },
-            { id: "2", category: "Evening Wear", name: "Obsidian Gown", price: 2100, image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" },
-            { id: "3", category: "Tailored", name: "Sculpted Blazer", price: 980, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" },
-            { id: "4", category: "Accessories", name: "Structured Tote", price: 750, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop" }
+            {
+                id: "1",
+                category: "Outerwear",
+                name: "Monochrome Trench",
+                price: 1250,
+                image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop",
+                link: "#"
+            },
+            {
+                id: "2",
+                category: "Evening Wear",
+                name: "Obsidian Gown",
+                price: 2100,
+                image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop",
+                link: "#"
+            },
+            {
+                id: "3",
+                category: "Tailored",
+                name: "Sculpted Blazer",
+                price: 980,
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop",
+                link: "#"
+            },
+            {
+                id: "4",
+                category: "Accessories",
+                name: "Structured Tote",
+                price: 750,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop",
+                link: "#"
+            }
         ];
 
+        // --- RENDER PRODUCTS ---
         const productGrid = document.getElementById('productGrid');
         if (productGrid) {
             productGrid.innerHTML = products.map(product => `
                 <div class="product-card">
-                    <a href="#" class="product-image">
+                    <a href="${product.link}" class="product-image">
                         <img src="${product.image}" alt="${product.name}">
                     </a>
                     <div class="product-info">
                         <div>
                             <span class="product-category">${product.category}</span>
-                            <a href="#" class="product-title">${product.name}</a>
+                            <a href="${product.link}" class="product-title">${product.name}</a>
                             <div class="product-price">$${product.price}</div>
                         </div>
                         <button class="btn-add-cart" onclick="addToCart('${product.id}')">Add to Bag</button>
@@ -903,12 +1165,15 @@
             `).join('');
         }
 
-        // --- CART DRAWER LOGIC ---
+        // --- SHOPPING CART SYSTEM ---
         let cart = [];
         const openCartBtn = document.getElementById('openCart');
         const closeCartBtn = document.getElementById('closeCart');
         const cartDrawer = document.getElementById('cartDrawer');
         const cartOverlay = document.getElementById('cartOverlay');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalElem = document.getElementById('cartTotal');
+        const cartBadge = document.getElementById('cartBadge');
 
         function toggleCart() {
             cartDrawer.classList.toggle('open');
@@ -919,17 +1184,68 @@
         if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCart);
         if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
 
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
             if (product) {
                 cart.push(product);
-                document.getElementById('cartBadge').textContent = cart.length;
-                document.getElementById('cartTotal').textContent = `$${cart.reduce((sum, item) => sum + item.price, 0)}`;
-                toggleCart();
+                updateCartUI();
+                if (!cartDrawer.classList.contains('open')) toggleCart();
             }
         }
 
-        // --- HEADER SCROLL EFFECT ---
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            cartBadge.textContent = cart.length;
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotalElem.textContent = `$${subtotal}`;
+            document.getElementById('checkoutTotal').textContent = `$${subtotal}`;
+
+            cartItemsContainer.innerHTML = cart.length === 0 ? 
+                '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your bag is empty.</p>' :
+                cart.map((item, idx) => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${idx})">&times;</button>
+                    </div>
+                `).join('');
+        }
+
+        // --- CHECKOUT MODAL SYSTEM ---
+        const checkoutModal = document.getElementById('checkoutModal');
+        const openCheckoutBtn = document.getElementById('openCheckout');
+        const closeCheckoutBtn = document.getElementById('closeCheckout');
+
+        function toggleCheckout() {
+            if (cart.length === 0 && !checkoutModal.classList.contains('active')) {
+                alert('Your bag is empty!');
+                return;
+            }
+            checkoutModal.classList.toggle('active');
+        }
+
+        if (openCheckoutBtn) openCheckoutBtn.addEventListener('click', () => {
+            toggleCart();
+            toggleCheckout();
+        });
+        if (closeCheckoutBtn) closeCheckoutBtn.addEventListener('click', toggleCheckout);
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            alert('Thank you for your order. Your purchase has been processed.');
+            cart = [];
+            updateCartUI();
+            toggleCheckout();
+        }
+
+        // --- NAVBAR SCROLL EFFECT ---
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -938,6 +1254,17 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // --- MOBILE MENU HAMBURGER ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
     </script>
 </body>
 </html>
