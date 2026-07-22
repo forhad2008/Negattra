@@ -603,102 +603,130 @@
     }
 
     /* --- 50% REDUCED BLACK & WHITE CONTACT FORM --- */
-    .contact-section {
-        max-width: 300px; /* Reduced by 50% */
-        margin: 0 auto;
-        background: #ffffff;
-        padding: 1.5rem 1.4rem; /* Reduced padding */
-        border: 1px solid #000000;
-        border-radius: 0px;
-        color: #000000;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
 
-    .contact-title {
-        font-family: var(--font-heading);
-        font-size: 0.9rem; /* Reduced by 50% */
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        text-align: center;
-        margin-bottom: 0.75rem;
-        font-weight: 700;
-        color: #000000;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 0.4rem;
-    }
+    .contact-section{
+    max-width:480px;
+    width:100%;
+    margin:auto;
+    padding:40px;
+    background:rgba(255,255,255,.03);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,.55);
+}
 
-    .contact-section .form-group {
-        margin-bottom: 0.55rem;
-    }
+.contact-title{
+    font-family:var(--font-heading);
+    text-align:center;
+    font-size:1.3rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:35px;
+    color:#fff;
+}
 
-    .contact-section .form-group label {
-        display: block;
-        color: #000000;
-        font-weight: 600;
-        font-size: 0.7rem; /* Reduced by 50% */
-        text-transform: uppercase;
-        letter-spacing: 0.75px;
-        margin-bottom: 0.2rem;
-    }
+.contact-section .form-group{
+    margin-bottom:22px;
+}
 
-    .contact-section .form-group input, 
-    .contact-section .form-group textarea {
-        width: 100%;
-        background: #ffffff;
-        border: 1px solid #cccccc;
-        color: #000000;
-        border-radius: 0px;
-        padding: 0.5rem 0.7rem;
-        font-family: var(--font-body);
-        font-size: 0.7rem; /* Reduced by 50% */
-        letter-spacing: 0.25px;
-        transition: all 0.2s ease-in-out;
-    }
+.contact-section label{
+    display:block;
+    margin-bottom:10px;
+    color:#d4d4d4;
+    font-size:.82rem;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
 
-    .contact-section .form-group input::placeholder,
-    .contact-section .form-group textarea::placeholder {
-        color: #aaaaaa;
-        font-weight: 500;
-    }
+.contact-section input,
+.contact-section textarea{
 
-    .contact-section .form-group input:focus, 
-    .contact-section .form-group textarea:focus {
-        border-color: #000000;
-        outline: none;
-        background: #fafafa;
-    }
+    width:100%;
+    padding:16px 18px;
 
-    .contact-section .btn-submit {
-        width: 100%;
-        background: #000000;
-        color: #ffffff;
-        border: 1px solid #000000;
-        border-radius: 0px;
-        padding: 0.4rem;
-        font-family: var(--font-body);
-        font-size: 0.7rem; /* Reduced by 50% */
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 0.25rem;
-    }
+    background:rgba(255,255,255,.04);
 
-    .contact-section .btn-submit:hover {
-        background: #ffffff;
-        color: #000000;
-    }
+    border:1px solid rgba(255,255,255,.12);
 
-    #form-status {
-        font-size: 0.35rem; /* Reduced by 50% */
-        text-align: center;
-        margin-top: 0.4rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        font-weight: 600;
-        display: none;
-    }
+    border-radius:14px;
+
+    color:#fff;
+
+    font-size:.95rem;
+
+    transition:.35s;
+}
+
+.contact-section textarea{
+    min-height:170px;
+    resize:vertical;
+}
+
+.contact-section input::placeholder,
+.contact-section textarea::placeholder{
+    color:#888;
+}
+
+.contact-section input:focus,
+.contact-section textarea:focus{
+
+    outline:none;
+
+    border-color:#FFD700;
+
+    box-shadow:0 0 20px rgba(255,215,0,.25);
+
+    background:rgba(255,255,255,.06);
+}
+
+.btn-submit{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    color:#000;
+
+    font-size:.82rem;
+
+    letter-spacing:2px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.btn-submit:hover{
+
+    background:#FFD700;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 30px rgba(255,215,0,.35);
+}
+
+#form-status{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    font-size:.8rem;
+
+    font-weight:600;
+}
 
     /* --- FOOTER --- */
     footer {
@@ -953,30 +981,38 @@
             <h2 class="section-title">Get In Touch</h2>
             <p class="section-subtitle">Direct Inquiry to Our Atelier</p>
         </div>
+        
+<div class="contact-section">
+    <h3 class="contact-title">Send an Inquiry</h3>
 
-        <div class="contact-section">
-            <h3 class="contact-title">Contact Us</h3>
-            <form id="google-sheet-form">
-                <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" name="Name" required placeholder="Eleanor Vance">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="Email" required placeholder="eleanor@atelier.com">
-                </div>
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" name="Subject" required placeholder="Inquiry">
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea name="Message" rows="3" required placeholder="Write your message..."></textarea>
-                </div>
-                <button type="submit" id="submit-btn" class="btn-submit">Send Message</button>
-                <div id="form-status"></div>
-            </form>
+    <form id="google-sheet-form">
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input
+                type="email"
+                name="Email"
+                placeholder="your@email.com"
+                required>
         </div>
+
+        <div class="form-group">
+            <label>Your Message</label>
+            <textarea
+                name="Message"
+                rows="5"
+                placeholder="Tell us about your request..."
+                required></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn-submit">
+            Send Email.
+        </button>
+
+        <div id="form-status"></div>
+
+    </form>
+</div>
     </section>
 
     <footer>
