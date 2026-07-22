@@ -32,17 +32,29 @@
         --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
+    /* PREVENT OUTER WINDOW SCROLLING */
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
         background-color: var(--bg-dark);
         color: var(--text-main);
         font-family: var(--font-body);
-        overflow-x: hidden;
         line-height: 1.6;
         position: relative;
+    }
+
+    /* INTERNAL SCROLL CONTAINER */
+    #app-viewport {
+        height: 100vh;
+        width: 100vw;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        position: relative;
+        z-index: 1;
+        /* Force smooth momentum scrolling on mobile devices */
+        -webkit-overflow-scrolling: touch; 
     }
 
     /* --- ANIMATED BACKGROUND CANVAS --- */
@@ -52,7 +64,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        z-index: -1;
+        z-index: 0;
         pointer-events: none;
     }
 
@@ -74,9 +86,9 @@
         left: 0;
         width: 100%;
         z-index: 1000;
-        padding: 1.5rem 4rem;
-        display: flex;
-        justify-content: space-between;
+        padding: 1rem 3rem;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
         background: linear-gradient(to bottom, rgba(2, 7, 18, 0.95), rgba(2, 7, 18, 0));
         transition: var(--transition);
@@ -85,24 +97,76 @@
     header.scrolled {
         background: rgba(2, 7, 18, 0.98);
         backdrop-filter: blur(12px);
-        padding: 1rem 4rem;
+        padding: 0.8rem 3rem;
         border-bottom: 1px solid var(--border-color);
         box-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
 
-    .brand-logo img {
-        height: 120px;
+    /* LEFT CONTAINER FOR HAMBURGER AND NAV LINKS */
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    /* HAMBURGER TOGGLE (FIRST ELEMENT) */
+    .hamburger {
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 20px;
+        width: 26px;
+        z-index: 1100;
+    }
+
+    .hamburger span {
+        width: 100%;
+        height: 2px;
+        background-color: var(--text-main);
+        border-radius: 2px;
         transition: var(--transition);
     }
 
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* NAVIGATION DRAWER/LINKS */
     .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 320px;
+        height: 100vh;
+        background-color: rgba(2, 7, 18, 0.98);
+        backdrop-filter: blur(15px);
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 2.5rem;
         list-style: none;
+        transition: var(--transition);
+        box-shadow: 10px 0 25px rgba(0,0,0,0.9);
+        border-right: 1px solid var(--border-color);
+        z-index: 1050;
+    }
+
+    .nav-links.active {
+        left: 0;
     }
 
     .nav-links a {
-        font-size: 0.85rem;
+        font-size: 1rem;
         text-transform: uppercase;
         letter-spacing: 2px;
         font-weight: 600;
@@ -133,10 +197,21 @@
         width: 100%;
     }
 
+    /* CENTER LOGO */
+    .brand-logo {
+        justify-self: center;
+    }
+
+    .brand-logo img {
+        height: 90px;
+        transition: var(--transition);
+    }
+
+    /* RIGHT SHOPPING BAG ACTION */
     .nav-actions {
+        justify-self: end;
         display: flex;
         align-items: center;
-        gap: 1.8rem;
     }
 
     .icon-btn {
@@ -172,37 +247,6 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    /* --- HAMBURGER MENU --- */
-    .hamburger {
-        display: none;
-        cursor: pointer;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 22px;
-        width: 28px;
-        z-index: 1100;
-    }
-
-    .hamburger span {
-        width: 100%;
-        height: 2px;
-        background-color: var(--text-main);
-        border-radius: 2px;
-        transition: var(--transition);
-    }
-
-    .hamburger.active span:nth-child(1) {
-        transform: translateY(10px) rotate(45deg);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg);
     }
 
     /* --- SHOPPING CART DRAWER --- */
@@ -320,7 +364,7 @@
         width: 100vw;
         height: 100vh;
         background: rgba(1, 4, 10, 0.8);
-        z-index: 1150;
+        z-index: 1040;
         opacity: 0;
         pointer-events: none;
         transition: var(--transition);
@@ -701,24 +745,6 @@
         font-weight: 600;
     }
 
-    @media (max-width: 768px) {
-        .contact-section {
-            padding: 22px;
-        }
-
-        .contact-section input {
-            height: 35px;
-        }
-
-        .contact-section textarea {
-            min-height: 60px;
-        }
-
-        .btn-submit {
-            height: 35px;
-        }
-    }   
-
     /* --- FOOTER --- */
     footer {
         background-color: rgba(1, 4, 10, 0.95);
@@ -804,35 +830,15 @@
 
     @media (max-width: 768px) {
         header {
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.5rem;
         }
 
         .brand-logo img {
             height: 60px;
         }
 
-        .hamburger {
-            display: flex;
-        }
-
         .nav-links {
-            position: fixed;
-            top: 0;
-            right: -100%;
             width: 80%;
-            height: 100vh;
-            background-color: rgba(2, 7, 18, 0.98);
-            backdrop-filter: blur(15px);
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-            box-shadow: -10px 0 25px rgba(0,0,0,0.9);
-            border-left: 1px solid var(--border-color);
-        }
-
-        .nav-links.active {
-            right: 0;
         }
 
         .hero-title {
@@ -859,6 +865,22 @@
             gap: 1rem;
             text-align: center;
         }
+
+        .contact-section {
+            padding: 22px;
+        }
+
+        .contact-section input {
+            height: 35px;
+        }
+
+        .contact-section textarea {
+            min-height: 60px;
+        }
+
+        .btn-submit {
+            height: 35px;
+        }
     }
 
     @media (max-width: 480px) {
@@ -879,27 +901,29 @@
     <canvas id="bg-canvas"></canvas>
 
     <header id="navbar">
-        <a href="#" class="brand-logo">
-            <img src="logo3.png" alt="NEGATTRA Logo">
-        </a>
-        
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#collection">Collections</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-
-        <div class="nav-actions">
-            <button class="icon-btn" id="openCart" aria-label="Cart" title="Bag">
-                &#128092;
-                <span class="cart-badge" id="cartBadge">0</span>
-            </button>
+        <div class="nav-left">
             <div class="hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeNav()">Home</a></li>
+                <li><a href="#collection" onclick="closeNav()">Collections</a></li>
+                <li><a href="#about" onclick="closeNav()">About</a></li>
+                <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+            </ul>
+        </div>
+
+        <a href="#home" class="brand-logo">
+            <img src="logo3.png" alt="NEGATTRA Logo">
+        </a>
+        
+        <div class="nav-actions">
+            <button class="icon-btn" id="openCart" aria-label="Cart" title="Bag">
+                &#128092;
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
         </div>
     </header>
 
@@ -941,107 +965,89 @@
         </form>
     </div>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title">NEGATTRA</h1>
-            <p class="hero-subtitle">Ocean Whale Edition • Autumn/Winter '26</p>
-            <a href="#collection" class="btn-primary">Explore Collection</a>
-        </div>
-    </section>
+    <div id="app-viewport">
 
-    <section class="section" id="collection">
-        <div class="section-header">
-            <h2 class="section-title">New Arrivals</h2>
-            <p class="section-subtitle">Crafted for the Extraordinary</p>
-        </div>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="hero-title">NEGATTRA</h1>
+                <p class="hero-subtitle">Ocean Whale Edition • Autumn/Winter '26</p>
+                <a href="#collection" class="btn-primary">Explore Collection</a>
+            </div>
+        </section>
 
-        <div class="product-grid" id="productGrid"></div>
-    </section>
-
-    <section class="brand-banner" id="about">
-        <div class="banner-content">
-            <h2>The Vision</h2>
-            <p>NEGATTRA embodies the harmony of sharp geometries and timeless luxury. Designed for individuals who dictate trends rather than follow them.</p>
-            <a href="#contact" class="btn-primary">Discover the Atelier</a>
-        </div>
-    </section>
-
-    <section class="section" id="contact">
-
-    <div class="contact-section">
-
-        <form id="google-sheet-form">
-
-            <div class="form-group">
-                <label>EMAIL</label>
-
-                <input
-                    type="email"
-                    name="Email"
-                    placeholder="Enter your email"
-                    required>
+        <section class="section" id="collection">
+            <div class="section-header">
+                <h2 class="section-title">New Arrivals</h2>
+                <p class="section-subtitle">Crafted for the Extraordinary</p>
             </div>
 
-            <div class="form-group">
-                <label>MESSAGE</label>
+            <div class="product-grid" id="productGrid"></div>
+        </section>
 
-                <textarea
-                    name="Message"
-                    placeholder="Your message..."
-                    required></textarea>
+        <section class="brand-banner" id="about">
+            <div class="banner-content">
+                <h2>The Vision</h2>
+                <p>NEGATTRA embodies the harmony of sharp geometries and timeless luxury. Designed for individuals who dictate trends rather than follow them.</p>
+                <a href="#contact" class="btn-primary">Discover the Atelier</a>
             </div>
+        </section>
 
-            <button type="submit"
-                    id="submit-btn"
-                    class="btn-submit">
-
-                <span>Send Message</span>
-                <i class="fa-solid fa-paper-plane"></i>
-
-            </button>
-
-            <div id="form-status"></div>
-
-        </form>
+        <section class="section" id="contact">
+            <div class="contact-section">
+                <form id="google-sheet-form">
+                    <div class="form-group">
+                        <label>EMAIL</label>
+                        <input type="email" name="Email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>MESSAGE</label>
+                        <textarea name="Message" placeholder="Your message..." required></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="btn-submit">
+                        <span>Send Message</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="logo3.png" alt="NEGATTRA Logo">
+                    <p>Defining modern luxury through bold architecture, refined textures, and uncompromised craftsmanship.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#collection">Collections</a></li>
+                        <li><a href="#about">Story</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Client Care</h4>
+                    <ul>
+                        <li><a href="#contact">Contact Support</a></li>
+                        <li><a href="#">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Social</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NEGATTRA Couture. All Rights Reserved.</p>
+                <p>Privacy Policy | Terms of Service</p>
+            </div>
+        </footer>
 
     </div>
-
-</section>
-    
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="logo3.png" alt="NEGATTRA Logo">
-                <p>Defining modern luxury through bold architecture, refined textures, and uncompromised craftsmanship.</p>
-            </div>
-            <div class="footer-column">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#collection">Collections</a></li>
-                    <li><a href="#about">Story</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Client Care</h4>
-                <ul>
-                    <li><a href="#contact">Contact Support</a></li>
-                    <li><a href="#">Book Appointment</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Social</h4>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Pinterest</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 NEGATTRA Couture. All Rights Reserved.</p>
-            <p>Privacy Policy | Terms of Service</p>
-        </div>
-    </footer>
 
     <script>
         // --- GOOGLE SHEETS FORM SUBMISSION ---
@@ -1079,7 +1085,6 @@
         }
 
         // --- HIGH VISIBILITY ANIMATED CANVAS BACKGROUND ---
-        // Updated canvas with deep oceanic blue radial and linear ambient waves
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, step = 0;
@@ -1095,7 +1100,6 @@
             step += 0.005;
             ctx.clearRect(0, 0, width, height);
 
-            // Ocean abyss dynamic gradient
             const x1 = width * (0.5 + 0.3 * Math.cos(step));
             const y1 = height * (0.5 + 0.3 * Math.sin(step));
             const x2 = width * (0.5 - 0.3 * Math.cos(step));
@@ -1109,7 +1113,6 @@
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, width, height);
 
-            // Dynamic glowing blue wave effect
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(0, height * 0.5);
@@ -1205,7 +1208,10 @@
 
         if (openCartBtn) openCartBtn.addEventListener('click', toggleCart);
         if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCart);
-        if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
+        if (cartOverlay) cartOverlay.addEventListener('click', () => {
+            if (cartDrawer.classList.contains('open')) toggleCart();
+            closeNav();
+        });
 
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
@@ -1268,24 +1274,33 @@
             toggleCheckout();
         }
 
-        // --- NAVBAR SCROLL EFFECT ---
+        // --- INTERNAL CONTAINER SCROLL LISTENER FOR NAVBAR ---
+        const appViewport = document.getElementById('app-viewport');
         const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+        
+        appViewport.addEventListener('scroll', () => {
+            if (appViewport.scrollTop > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
 
-        // --- MOBILE MENU HAMBURGER ---
+        // --- MOBILE/DRAWER MENU CONTROL ---
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
+
+        function closeNav() {
+            if (hamburger) hamburger.classList.remove('active');
+            if (navLinks) navLinks.classList.remove('active');
+            if (cartOverlay) cartOverlay.classList.remove('active');
+        }
 
         if (hamburger) {
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
+                cartOverlay.classList.toggle('active');
             });
         }
     </script>
