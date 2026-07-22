@@ -605,116 +605,109 @@
     /* --- 50% REDUCED BLACK & WHITE CONTACT FORM --- */
 
     .contact-section{
-    max-width:480px;
-    width:100%;
+    max-width:420px;
     margin:auto;
-    padding:40px;
-    background:rgba(255,255,255,.03);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.12);
+    padding:28px;
+    background:#0d0d0d;
+    border:1px solid rgba(255,255,255,.08);
     border-radius:22px;
-    box-shadow:0 25px 60px rgba(0,0,0,.55);
 }
 
 .contact-title{
-    font-family:var(--font-heading);
-    text-align:center;
-    font-size:1.3rem;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    margin-bottom:35px;
-    color:#fff;
+    display:none;
 }
 
 .contact-section .form-group{
-    margin-bottom:22px;
+    margin-bottom:18px;
 }
 
 .contact-section label{
     display:block;
-    margin-bottom:10px;
-    color:#d4d4d4;
+    margin-bottom:8px;
+    color:#f5f5f5;
     font-size:.82rem;
     font-weight:600;
-    letter-spacing:1px;
-    text-transform:uppercase;
+    letter-spacing:.3px;
 }
 
 .contact-section input,
+.contact-section select,
 .contact-section textarea{
 
     width:100%;
-    padding:16px 18px;
 
-    background:rgba(255,255,255,.04);
+    background:#070707;
 
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:14px;
+    border:1px solid #232323;
 
     color:#fff;
 
-    font-size:.95rem;
+    border-radius:14px;
 
-    transition:.35s;
+    padding:12px 16px;      /* 50% smaller */
+
+    font-size:.9rem;
+
+    transition:.3s;
+
+    outline:none;
+}
+
+.contact-section input{
+    height:48px;            /* Smaller height */
+}
+
+.contact-section select{
+    height:48px;
 }
 
 .contact-section textarea{
-    min-height:170px;
+    min-height:110px;       /* Smaller than screenshot */
     resize:vertical;
 }
 
 .contact-section input::placeholder,
 .contact-section textarea::placeholder{
-    color:#888;
+    color:#777;
 }
 
 .contact-section input:focus,
+.contact-section select:focus,
 .contact-section textarea:focus{
 
-    outline:none;
+    border-color:#ffffff;
 
-    border-color:#FFD700;
-
-    box-shadow:0 0 20px rgba(255,215,0,.25);
-
-    background:rgba(255,255,255,.06);
+    box-shadow:0 0 0 3px rgba(255,255,255,.05);
 }
 
 .btn-submit{
 
     width:100%;
 
-    padding:16px;
+    height:52px;
 
     border:none;
 
     border-radius:14px;
 
-    background:#fff;
+    background:#f2f2f2;
 
     color:#000;
 
-    font-size:.82rem;
+    font-size:1rem;
 
-    letter-spacing:2px;
-
-    font-weight:700;
-
-    text-transform:uppercase;
+    font-weight:600;
 
     cursor:pointer;
 
-    transition:.35s;
+    transition:.3s;
 }
 
 .btn-submit:hover{
 
-    background:#FFD700;
+    background:#ffffff;
 
     transform:translateY(-2px);
-
-    box-shadow:0 12px 30px rgba(255,215,0,.35);
 }
 
 #form-status{
@@ -982,37 +975,25 @@
             <p class="section-subtitle">Direct Inquiry to Our Atelier</p>
         </div>
         
-<div class="contact-section">
-    <h3 class="contact-title">Send an Inquiry</h3>
-
-    <form id="google-sheet-form">
-
-        <div class="form-group">
-            <label>Email Address</label>
-            <input
-                type="email"
-                name="Email"
-                placeholder="your@email.com"
-                required>
-        </div>
-
-        <div class="form-group">
-            <label>Your Message</label>
-            <textarea
-                name="Message"
-                rows="5"
-                placeholder="Tell us about your request..."
-                required></textarea>
-        </div>
-
-        <button type="submit" id="submit-btn" class="btn-submit">
-            Send Email.
-        </button>
-
-        <div id="form-status"></div>
-
-    </form>
+<div class="form-group">
+    <label>Email Address *</label>
+    <input type="email"
+           name="Email"
+           placeholder="john@example.com"
+           required>
 </div>
+
+<div class="form-group">
+    <label>Project Message *</label>
+    <textarea name="Message"
+              placeholder="Tell us about your project..."
+              required></textarea>
+</div>
+
+<button class="btn-submit" type="submit">
+    Send Message ✈
+</button>
+        
     </section>
 
     <footer>
