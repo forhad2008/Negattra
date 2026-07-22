@@ -7,8 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
         
 <style>
     /* --- RESET & GLOBAL VARIABLES --- */
@@ -19,13 +18,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     }
 
     :root {
-        --bg-dark: #000000;
-        --bg-card: rgba(18, 18, 20, 0.85);
-        --text-main: #ffffff;
-        --text-muted: #c0c0c0;
-        --accent: #ffd700;
-        --accent-glow: rgba(255, 215, 0, 0.4);
-        --border-color: rgba(255, 255, 255, 0.18);
+        /* Palette updated to match Logo: Deep Abyss Blue, Metallic Silver, Ocean Highlights */
+        --bg-dark: #020712;
+        --bg-card: rgba(6, 18, 38, 0.75);
+        --text-main: #f0f4f8;
+        --text-muted: #8ea8c3;
+        --accent: #d1dbe5; /* Metallic Silver */
+        --accent-glow: rgba(0, 150, 255, 0.4); /* Ocean Glow */
+        --accent-blue: #0077be;
+        --border-color: rgba(0, 162, 255, 0.22);
         --font-heading: 'Cinzel', serif;
         --font-body: 'Montserrat', sans-serif;
         --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -77,12 +78,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0));
+        background: linear-gradient(to bottom, rgba(2, 7, 18, 0.95), rgba(2, 7, 18, 0));
         transition: var(--transition);
     }
 
     header.scrolled {
-        background: rgba(0, 0, 0, 0.98);
+        background: rgba(2, 7, 18, 0.98);
         backdrop-filter: blur(12px);
         padding: 1rem 4rem;
         border-bottom: 1px solid var(--border-color);
@@ -112,7 +113,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     .nav-links a:hover {
         opacity: 1;
-        color: var(--accent);
+        color: #ffffff;
         text-shadow: 0 0 10px var(--accent-glow);
     }
 
@@ -123,9 +124,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         left: 0;
         width: 0;
         height: 2px;
-        background-color: var(--accent);
+        background-color: var(--accent-blue);
         transition: var(--transition);
-        box-shadow: 0 0 8px var(--accent);
+        box-shadow: 0 0 8px var(--accent-glow);
     }
 
     .nav-links a:hover::after {
@@ -160,8 +161,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         position: absolute;
         top: -6px;
         right: -10px;
-        background-color: var(--accent);
-        color: #000;
+        background-color: var(--accent-blue);
+        color: #fff;
         font-size: 0.7rem;
         font-weight: 700;
         width: 18px;
@@ -170,6 +171,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 0 8px var(--accent-glow);
     }
 
     /* --- HAMBURGER MENU --- */
@@ -210,14 +212,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         right: -400px;
         width: 380px;
         height: 100vh;
-        background-color: #0d0d0e;
+        background-color: #030a16;
         border-left: 1px solid var(--border-color);
         z-index: 1200;
         transition: var(--transition);
         display: flex;
         flex-direction: column;
         padding: 2rem;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.9);
     }
 
     .cart-drawer.open {
@@ -317,7 +319,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0,0,0,0.7);
+        background: rgba(1, 4, 10, 0.8);
         z-index: 1150;
         opacity: 0;
         pointer-events: none;
@@ -337,7 +339,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         transform: translate(-50%, -50%) scale(0.9);
         width: 90%;
         max-width: 480px;
-        background: #111113;
+        background: #050e1a;
         border: 1px solid var(--border-color);
         box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         z-index: 1300;
@@ -388,7 +390,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.95)), 
+        background: linear-gradient(rgba(2, 7, 18, 0.65), rgba(2, 7, 18, 0.95)), 
                     url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
         z-index: 0;
         animation: heroBgPulse 12s ease-in-out infinite alternate;
@@ -414,12 +416,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         text-transform: uppercase;
         margin-bottom: 1rem;
         font-weight: 600;
+        background: linear-gradient(180deg, #ffffff 0%, #a2b7ca 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .hero-subtitle {
         font-size: 1.05rem;
         letter-spacing: 4px;
-        color: var(--accent);
+        color: var(--accent-blue);
         text-transform: uppercase;
         margin-bottom: 2.5rem;
         font-weight: 500;
@@ -428,7 +433,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     .btn-primary {
         display: inline-block;
         padding: 1rem 2.5rem;
-        border: 2px solid var(--text-main);
+        border: 2px solid var(--accent);
         color: var(--text-main);
         text-transform: uppercase;
         font-size: 0.85rem;
@@ -441,10 +446,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     }
 
     .btn-primary:hover {
-        color: #000;
+        color: #020712;
         background-color: var(--accent);
         border-color: var(--accent);
-        box-shadow: 0 0 15px var(--accent-glow);
+        box-shadow: 0 0 20px var(--accent-glow);
     }
 
     /* --- FEATURED COLLECTION SECTION --- */
@@ -466,7 +471,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     }
 
     .section-subtitle {
-        color: var(--accent);
+        color: var(--text-muted);
         font-size: 0.9rem;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -492,8 +497,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     .product-card:hover {
         transform: translateY(-8px);
-        border-color: var(--accent);
-        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
+        border-color: rgba(0, 162, 255, 0.6);
+        box-shadow: 0 10px 30px rgba(0, 100, 200, 0.25);
     }
 
     .product-image {
@@ -566,14 +571,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     .btn-add-cart:hover {
         background-color: var(--text-main);
-        color: #000;
+        color: #020712;
         border-color: var(--text-main);
     }
 
     /* --- BRAND BANNER --- */
     .brand-banner {
         height: 50vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+        background: linear-gradient(rgba(2, 7, 18, 0.8), rgba(2, 7, 18, 0.8)), 
                     url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1920&auto=format&fit=crop') fixed center/cover;
         display: flex;
         align-items: center;
@@ -602,207 +607,121 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         font-size: 0.95rem;
     }
 
-    /* contact*/
-   .contact-section{
-
-    width:100%;
-    max-width:460px;
-
-    margin:0 auto;
-
-    padding:30px;
-
-    background:#ffffff;
-
-    border:1px solid #e5e5e5;
-
-    border-radius:0px;
-
-    box-shadow:0 20px 45px rgba(0,0,0,.08);
-
-}
-
-.contact-section .form-group{
-
-    margin-bottom:20px;
-
-}
-
-.contact-section label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-size:.7rem;
-
-    font-weight:600;
-
-    color:#111111;
-
-}
-
-.contact-section label span{
-
-    color:#000;
-
-}
-
-.contact-section input,
-.contact-section textarea{
-
-    width:100%;
-
-    background:#F5F5F5;
-
-    color:#111111;
-
-    border:1px solid #dddddd;
-
-    border-radius:0px;
-
-    outline:none;
-
-    transition:.3s;
-
-    font-size:.7rem;
-    font-weight: 700; /* Bold */
-
-    font-family:var(--font-body);
-
-}
-
-.contact-section input{
-
-    height:40px;
-
-    padding:0 18px;
-
-}
-
-.contact-section textarea{
-
-    min-height:70px;
-
-    padding:16px 18px;
-
-    resize:vertical;
-
-}
-
-.contact-section input::placeholder,
-.contact-section textarea::placeholder{
-
-    color:#888888;
-
-}
-
-.contact-section input:focus,
-.contact-section textarea:focus{
-
-    border-color:#000;
-
-    background:#ffffff;
-
-    box-shadow:0 0 0 3px rgba(0,0,0,.08);
-
-}
-
-.btn-submit{
-
-    width:100%;
-
-    height:30px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:10px;
-
-    background:#111111;
-
-    color:#ffffff;
-
-    border:none;
-
-    border-radius:0px;
-
-    font-size:0.8rem;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.35s;
-
-}
-
-.btn-submit i{
-
-    font-size:12px;
-
-}
-
-.btn-submit:hover{
-
-    background:#000000;
-
-    transform:translateY(-2px);
-
-    box-shadow:0 12px 25px rgba(0,0,0,.18);
-
-}
-
-#form-status{
-
-    display:none;
-
-    margin-top:16px;
-
-    text-align:center;
-
-    font-size:.82rem;
-
-    font-weight:600;
-
-}
-
-@media (max-width:768px){
-
-.contact-section{
-
-    padding:22px;
-
-}
-
-.contact-section input{
-
-    height:28px;
-
-}
-
-.contact-section textarea{
-
-    min-height:60px;
-
-}
-
-.btn-submit{
-
-    height:28px;
-
-}
-
-}  
-
-
+    /* --- CONTACT SECTION --- */
+    .contact-section {
+        width: 100%;
+        max-width: 460px;
+        margin: 0 auto;
+        padding: 30px;
+        background: rgba(6, 18, 38, 0.9);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+    }
+
+    .contact-section .form-group {
+        margin-bottom: 20px;
+    }
+
+    .contact-section label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: .7rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .contact-section input,
+    .contact-section textarea {
+        width: 100%;
+        background: #020914;
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        outline: none;
+        transition: .3s;
+        font-size: .75rem;
+        font-weight: 600;
+        font-family: var(--font-body);
+    }
+
+    .contact-section input {
+        height: 40px;
+        padding: 0 18px;
+    }
+
+    .contact-section textarea {
+        min-height: 70px;
+        padding: 16px 18px;
+        resize: vertical;
+    }
+
+    .contact-section input::placeholder,
+    .contact-section textarea::placeholder {
+        color: #586e85;
+    }
+
+    .contact-section input:focus,
+    .contact-section textarea:focus {
+        border-color: rgba(0, 162, 255, 0.8);
+        background: #041224;
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-submit {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        background: var(--text-main);
+        color: #020712;
+        border: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: .35s;
+    }
+
+    .btn-submit i {
+        font-size: 12px;
+    }
+
+    .btn-submit:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px var(--accent-glow);
+    }
+
+    #form-status {
+        display: none;
+        margin-top: 16px;
+        text-align: center;
+        font-size: .82rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .contact-section {
+            padding: 22px;
+        }
+
+        .contact-section input {
+            height: 35px;
+        }
+
+        .contact-section textarea {
+            min-height: 60px;
+        }
+
+        .btn-submit {
+            height: 35px;
+        }
+    }   
 
     /* --- FOOTER --- */
     footer {
-        background-color: rgba(5, 5, 5, 0.95);
+        background-color: rgba(1, 4, 10, 0.95);
         padding: 4rem 4rem 2rem 4rem;
         border-top: 1px solid var(--border-color);
     }
@@ -815,8 +734,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     }
 
     .footer-brand img {
-        height: 40px;
-        filter: invert(1) brightness(1.4);
+        height: 50px;
         margin-bottom: 1.2rem;
     }
 
@@ -903,7 +821,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             right: -100%;
             width: 80%;
             height: 100vh;
-            background-color: rgba(10, 10, 12, 0.98);
+            background-color: rgba(2, 7, 18, 0.98);
             backdrop-filter: blur(15px);
             flex-direction: column;
             justify-content: center;
@@ -954,7 +872,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         }
     }
 </style>
-              
+        
 </head>
 <body>
 
@@ -1009,11 +927,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <form id="checkoutForm" onsubmit="handleCheckout(event)">
             <div class="form-group" style="margin-bottom: 1rem;">
                 <label style="font-size: 0.7rem; color: var(--text-muted);">FULL NAME</label>
-                <input type="text" required placeholder="Eleanor Vance" style="width: 100%; padding: 0.6rem; background: #1a1a1c; border: 1px solid var(--border-color); color: #fff;">
+                <input type="text" required placeholder="Eleanor Vance" style="width: 100%; padding: 0.6rem; background: #020914; border: 1px solid var(--border-color); color: #fff;">
             </div>
             <div class="form-group" style="margin-bottom: 1rem;">
                 <label style="font-size: 0.7rem; color: var(--text-muted);">EMAIL ADDRESS</label>
-                <input type="email" required placeholder="eleanor@atelier.com" style="width: 100%; padding: 0.6rem; background: #1a1a1c; border: 1px solid var(--border-color); color: #fff;">
+                <input type="email" required placeholder="eleanor@atelier.com" style="width: 100%; padding: 0.6rem; background: #020914; border: 1px solid var(--border-color); color: #fff;">
             </div>
             <div class="cart-total" style="margin-top: 1.5rem;">
                 <span>Total Amount</span>
@@ -1026,7 +944,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <section class="hero" id="home">
         <div class="hero-content">
             <h1 class="hero-title">NEGATTRA</h1>
-            <p class="hero-subtitle">Elegance Redefined • Autumn/Winter '26</p>
+            <p class="hero-subtitle">Ocean Whale Edition • Autumn/Winter '26</p>
             <a href="#collection" class="btn-primary">Explore Collection</a>
         </div>
     </section>
@@ -1055,21 +973,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <form id="google-sheet-form">
 
             <div class="form-group">
-                <label> <span></span></label>
+                <label>EMAIL</label>
 
                 <input
                     type="email"
                     name="Email"
-                    placeholder="Email"
+                    placeholder="Enter your email"
                     required>
             </div>
 
             <div class="form-group">
-                <label> <span></span></label>
+                <label>MESSAGE</label>
 
                 <textarea
                     name="Message"
-                    placeholder="massage..."
+                    placeholder="Your message..."
                     required></textarea>
             </div>
 
@@ -1093,7 +1011,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="logo.png" alt="NEGATTRA Logo">
+                <img src="logo3.png" alt="NEGATTRA Logo">
                 <p>Defining modern luxury through bold architecture, refined textures, and uncompromised craftsmanship.</p>
             </div>
             <div class="footer-column">
@@ -1127,7 +1045,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <script>
         // --- GOOGLE SHEETS FORM SUBMISSION ---
-        // Replace with your Google Apps Script Web App URL
         const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
         
         const form = document.getElementById('google-sheet-form');
@@ -1140,19 +1057,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 submitBtn.disabled = true;
                 submitBtn.innerText = 'SENDING...';
                 statusDiv.style.display = 'block';
-                statusDiv.style.color = '#333';
+                statusDiv.style.color = 'var(--text-muted)';
                 statusDiv.innerText = 'Sending message...';
 
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then(response => {
-                        statusDiv.style.color = 'green';
+                        statusDiv.style.color = '#38ef7d';
                         statusDiv.innerText = 'SENT SUCCESSFULLY!';
                         submitBtn.disabled = false;
                         submitBtn.innerText = 'SEND MESSAGE';
                         form.reset();
                     })
                     .catch(error => {
-                        statusDiv.style.color = 'red';
+                        statusDiv.style.color = '#ff4d4d';
                         statusDiv.innerText = 'ERROR SENDING MESSAGE.';
                         submitBtn.disabled = false;
                         submitBtn.innerText = 'SEND MESSAGE';
@@ -1162,6 +1079,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         }
 
         // --- HIGH VISIBILITY ANIMATED CANVAS BACKGROUND ---
+        // Updated canvas with deep oceanic blue radial and linear ambient waves
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, step = 0;
@@ -1177,21 +1095,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             step += 0.005;
             ctx.clearRect(0, 0, width, height);
 
-            // Dynamic color oscillation gradient
-            const x1 = width * (0.5 + 0.4 * Math.cos(step));
-            const y1 = height * (0.5 + 0.4 * Math.sin(step));
-            const x2 = width * (0.5 - 0.4 * Math.cos(step));
-            const y2 = height * (0.5 - 0.4 * Math.sin(step));
+            // Ocean abyss dynamic gradient
+            const x1 = width * (0.5 + 0.3 * Math.cos(step));
+            const y1 = height * (0.5 + 0.3 * Math.sin(step));
+            const x2 = width * (0.5 - 0.3 * Math.cos(step));
+            const y2 = height * (0.5 - 0.3 * Math.sin(step));
 
             const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-            grad.addColorStop(0, '#000000');
-            grad.addColorStop(0.5, '#121218');
-            grad.addColorStop(1, '#221c08');
+            grad.addColorStop(0, '#01040a');
+            grad.addColorStop(0.5, '#040d1a');
+            grad.addColorStop(1, '#02182b');
 
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, width, height);
 
-            // Dynamic glowing wave effect
+            // Dynamic glowing blue wave effect
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(0, height * 0.5);
@@ -1204,8 +1122,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             ctx.closePath();
 
             const waveGrad = ctx.createLinearGradient(0, height * 0.2, width, height);
-            waveGrad.addColorStop(0, 'rgba(255, 215, 0, 0.08)');
-            waveGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            waveGrad.addColorStop(0, 'rgba(0, 150, 255, 0.08)');
+            waveGrad.addColorStop(1, 'rgba(1, 4, 10, 0)');
             ctx.fillStyle = waveGrad;
             ctx.fill();
             ctx.restore();
