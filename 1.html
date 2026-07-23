@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negattra Whale T-Shirt | Modern Luxury</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <style>
+        /* --- RESET & GLOBAL VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #020712;
+            --bg-card: rgba(6, 18, 38, 0.75);
+            --text-main: #f0f4f8;
+            --text-muted: #8ea8c3;
+            --accent: #d1dbe5;
+            --accent-glow: rgba(0, 150, 255, 0.4);
+            --accent-blue: #0077be;
+            --border-color: rgba(0, 162, 255, 0.22);
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* ANIMATED BACKGROUND CANVAS */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 3rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            background: rgba(2, 7, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent-blue);
+            transform: translateX(-4px);
+        }
+
+        .brand-logo {
+            justify-self: center;
+        }
+
+        .brand-logo img {
+            height: 70px;
+            transition: var(--transition);
+        }
+
+        .nav-actions {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .icon-btn:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background-color: var(--accent-blue);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* --- PRODUCT CONTAINER --- */
+        .product-page-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 9rem 2rem 5rem 2rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+        }
+
+        /* GALLERY SECTION */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .main-image-container {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .main-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .thumb {
+            width: 80px;
+            height: 100px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: var(--transition);
+            object-fit: cover;
+        }
+
+        .thumb.active, .thumb:hover {
+            opacity: 1;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* DETAILS SECTION */
+        .product-details-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title-main {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #ffffff 0%, #a2b7ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .product-price-tag {
+            font-size: 1.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        /* OPTIONS FORM */
+        .option-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .option-label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .size-selector {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .size-btn {
+            width: 45px;
+            height: 45px;
+            background: #020914;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .size-btn:hover, .size-btn.active {
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+            background: #020914;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            color: var(--accent-blue);
+        }
+
+        .qty-input {
+            width: 50px;
+            background: none;
+            border: none;
+            text-align: center;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+        }
+
+        /* ACTIONS */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-add-bag {
+            flex: 1;
+            padding: 1.2rem;
+            background: var(--text-main);
+            color: #020712;
+            border: 1px solid var(--text-main);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-add-bag:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px var(--accent-glow);
+        }
+
+        /* ACCORDIONS / DETAILS SPECS */
+        .product-specs {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .spec-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .spec-content {
+            display: none;
+            padding-top: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .spec-item.active .spec-content {
+            display: block;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(1, 4, 10, 0.95);
+            padding: 3rem 2rem 2rem 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 992px) {
+            .product-page-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding-top: 7rem;
+            }
+            .product-title-main {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0.8rem 1.2rem;
+            }
+            .brand-logo img {
+                height: 50px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .product-title-main {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <div class="nav-left">
+            <a href="index.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <a href="index.html" class="brand-logo">
+            <img src="logo3.png" alt="NEGATTRA Logo">
+        </a>
+        
+        <div class="nav-actions">
+            <button class="icon-btn" aria-label="Cart" title="Bag">
+                &#128092;
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="product-page-wrapper">
+        
+        <section class="product-gallery">
+            <div class="main-image-container">
+                <img id="mainImage" src="t1.webp" alt="Negattra Whale T-Shirt">
+            </div>
+            <div class="thumbnail-list">
+                <img src="t1.webp" alt="Front View" class="thumb active" onclick="changeImage(this)">
+                <img src="whale.webp" alt="Art Detail View" class="thumb" onclick="changeImage(this)">
+            </div>
+        </section>
+
+        <section class="product-details-info">
+            <span class="product-category-tag">Outerwear & Wearables</span>
+            <h1 class="product-title-main">Negattra Whale T-Shirt</h1>
+            <div class="product-price-tag">$1,650</div>
+
+            <p class="product-description">
+                Elevate your everyday wardrobe with the iconic Negattra Whale T-Shirt. Crafted from ultra-heavyweight organic combed cotton with a relaxed silhouette. Features an exclusive ocean-abyss artwork screen-printed across the back and subtle metallic branding on the chest.
+            </p>
+
+            <div class="option-group">
+                <span class="option-label">Select Size</span>
+                <div class="size-selector">
+                    <button class="size-btn" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" onclick="selectSize(this)">XL</button>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <span class="option-label">Quantity</span>
+                <div class="quantity-control">
+                    <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                    <input type="text" id="productQty" class="qty-input" value="1" readonly>
+                    <button class="qty-btn" onclick="updateQty(1)">+</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-add-bag" onclick="addToCart()">
+                    <i class="fa-solid fa-bag-shopping"></i> Add to Bag
+                </button>
+            </div>
+
+            <div class="product-specs">
+                <div class="spec-item active" onclick="toggleSpec(this)">
+                    <div class="spec-header">
+                        <span>Details & Fit</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="spec-content">
+                        • Oversized luxury fit.<br>
+                        • 100% Organic Heavyweight Cotton (320 GSM).<br>
+                        • Custom screen-printed whale artwork with oceanic glow treatment.<br>
+                        • Made in Italy.
+                    </div>
+                </div>
+
+                <div class="spec-item" onclick="toggleSpec(this)">
+                    <div class="spec-header">
+                        <span>Shipping & Delivery</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="spec-content">
+                        Complimentary worldwide express shipping on all orders. Delivered in custom signature Negattra presentation packaging within 3–5 business days.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 NEGATTRA Couture. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- IMAGE GALLERY SWITCHER ---
+        function changeImage(element) {
+            document.getElementById('mainImage').src = element.src;
+            document.querySelectorAll('.thumb').forEach(thumb => thumb.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // --- SIZE SELECTOR ---
+        function selectSize(element) {
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // --- QUANTITY CONTROL ---
+        function updateQty(change) {
+            const qtyInput = document.getElementById('productQty');
+            let currentQty = parseInt(qtyInput.value);
+            currentQty += change;
+            if (currentQty < 1) currentQty = 1;
+            qtyInput.value = currentQty;
+        }
+
+        // --- TOGGLE SPECS ACCORDION ---
+        function toggleSpec(element) {
+            element.classList.toggle('active');
+        }
+
+        // --- ADD TO CART FEEDBACK ---
+        let cartCount = 0;
+        function addToCart() {
+            const qty = parseInt(document.getElementById('productQty').value);
+            cartCount += qty;
+            document.getElementById('cartBadge').innerText = cartCount;
+            
+            // Visual feedback
+            const btn = document.querySelector('.btn-add-bag');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Added to Bag';
+            btn.style.backgroundColor = '#0077be';
+            btn.style.color = '#fff';
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.backgroundColor = 'var(--text-main)';
+                btn.style.color = '#020712';
+            }, 2000);
+        }
+
+        // --- BACKGROUND CANVAS ANIMATION ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, step = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawAnimatedBackground() {
+            step += 0.005;
+            ctx.clearRect(0, 0, width, height);
+
+            const x1 = width * (0.5 + 0.3 * Math.cos(step));
+            const y1 = height * (0.5 + 0.3 * Math.sin(step));
+            const x2 = width * (0.5 - 0.3 * Math.cos(step));
+            const y2 = height * (0.5 - 0.3 * Math.sin(step));
+
+            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+            grad.addColorStop(0, '#01040a');
+            grad.addColorStop(0.5, '#040d1a');
+            grad.addColorStop(1, '#02182b');
+
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            requestAnimationFrame(drawAnimatedBackground);
+        }
+        drawAnimatedBackground();
+    </script>
+</body>
+</html>
